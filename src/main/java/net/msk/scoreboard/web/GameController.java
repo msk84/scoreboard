@@ -1,10 +1,14 @@
-package net.msk.scoreboard;
+package net.msk.scoreboard.web;
 
 import java.util.List;
 
+import net.msk.scoreboard.web.exception.GameIdMismatchException;
+import net.msk.scoreboard.web.exception.GameNotFoundException;
 import net.msk.scoreboard.persistence.model.GameEntity;
 import net.msk.scoreboard.persistence.repo.GameRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/games")
 public class GameController {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
+	
 	@Autowired
 	private GameRepository gameRepository;
 	
@@ -36,6 +42,7 @@ public class GameController {
 	
 	@GetMapping("/{id}")
 	public GameEntity findOne(@PathVariable Long id) {
+		LOGGER.info("Try loading game with id: {}", id);
 		return gameRepository.findById(id)
 				.orElseThrow(GameNotFoundException::new);
 	}

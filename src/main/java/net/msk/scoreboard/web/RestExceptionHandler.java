@@ -1,6 +1,9 @@
-package net.msk.scoreboard;
+package net.msk.scoreboard.web;
 
 import javax.validation.ConstraintViolationException;
+
+import net.msk.scoreboard.web.exception.GameIdMismatchException;
+import net.msk.scoreboard.web.exception.GameNotFoundException;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;

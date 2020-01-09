@@ -1,4 +1,4 @@
-package net.msk.scoreboard;
+package net.msk.scoreboard.web;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,6 +12,7 @@ public class SimpleController {
 	
 	@GetMapping("/")
 	public String homePage(final Model model) {
+		
 		model.addAttribute("appName", this.appName);
 		return "index";
 	}

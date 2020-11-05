@@ -22,7 +22,7 @@
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="/gameoverview">Game overview</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -44,6 +44,32 @@
 
             <div class="container-fluid">
                 <h1 class="display-3">Scoreboard</h1>
+
+                <!-- -->
+                <div th:switch="${games}">
+                    <h2 th:case="null">No games yet!</h2>
+                    <div th:case="*">
+                        <h2>Games</h2>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="game : ${games}">
+                                <td th:text="${game.id}"></td>
+                                <td th:text="${game.title}"></td>
+                                <td th:text="${game.author}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- -->
             </div>
         </div>
     </main>

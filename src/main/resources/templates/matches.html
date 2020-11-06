@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header.html :: header"></head>
+<body>
+    <div th:replace="fragments/navbar.html :: navbar"></div>
+
+    <main role="main">
+        <div class="container">
+
+            <div class="container-fluid">
+                <div th:switch="${games}">
+                    <h2 th:case="null">No games yet!</h2>
+                    <div th:case="*">
+                        <h2>Matches</h2>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="game : ${games}">
+                                <td th:text="${game.id}"></td>
+                                <td th:text="${game.title}"></td>
+                                <td th:text="${game.author}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="fragments/footer.html :: footer"></div>
+
+</body>
+</html>

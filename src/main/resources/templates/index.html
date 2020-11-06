@@ -1,82 +1,20 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="../css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
-    <link href="../css/scoreboard.css" rel="stylesheet">
-    <title>Scoreboard</title>
-</head>
+<head th:replace="fragments/header.html :: header"></head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Scoreboard</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div th:replace="fragments/navbar.html :: navbar"></div>
 
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/gameoverview">Game overview</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
     <main role="main">
         <div class="container">
             <p>Welcome to <span th:text="${appName}">Our App</span></p>
 
             <div class="container-fluid">
                 <h1 class="display-3">Scoreboard</h1>
-
-                <!-- -->
-                <div th:switch="${games}">
-                    <h2 th:case="null">No games yet!</h2>
-                    <div th:case="*">
-                        <h2>Games</h2>
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Title</th>
-                                <th>Author</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="game : ${games}">
-                                <td th:text="${game.id}"></td>
-                                <td th:text="${game.title}"></td>
-                                <td th:text="${game.author}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- -->
             </div>
         </div>
     </main>
-    <footer class="container">
-        <p>&copy; m.sk 2020</p>
-    </footer>
-    <script src="../js/jquery-3.5.1.slim.min.js" th:href="@{/js/jquery-3.5.1.slim.min.js}"></script>
-    <script src="../js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+
+    <div th:replace="fragments/footer.html :: footer"></div>
+
 </body>
 </html>

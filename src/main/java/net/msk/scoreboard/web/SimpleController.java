@@ -23,10 +23,10 @@ public class SimpleController {
 		return "index";
 	}
 
-	@GetMapping("/gameoverview")
+	@GetMapping("/matches")
 	public String gameOverview(final Model model) {
 
 		model.addAttribute("games", this.gameService.getGameOverview());
-		return "index";
+		return "matches";
 	}
 }

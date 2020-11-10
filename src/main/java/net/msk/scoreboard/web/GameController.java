@@ -37,23 +37,4 @@ public class GameController {
         return this.gameService.saveGame(game);
     }
 
-	/*
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id) {
-		gameRepository.findById(id)
-				.orElseThrow(GameNotFoundException::new);
-		gameRepository.deleteById(id);
-	}
-
-	@PutMapping("/{id}")
-	public GameEntity updateGame(@RequestBody GameEntity game, @PathVariable Long id) {
-		if (game.getId() != id) {
-			throw new GameIdMismatchException();
-		}
-		gameRepository.findById(id)
-				.orElseThrow(GameNotFoundException::new);
-		return gameRepository.save(game);
-	}
-	*/
-
 }

@@ -1,5 +1,6 @@
 package net.msk.scoreboard.service;
 
+import net.msk.scoreboard.mapper.GameMapper;
 import net.msk.scoreboard.model.Game;
 import net.msk.scoreboard.persistence.model.GameEntity;
 import net.msk.scoreboard.persistence.repo.GameRepository;
@@ -24,20 +25,31 @@ public class GameService {
     public Game getGame(final Long id) {
         final GameEntity dbGame = this.gameRepository.findById(id)
                 .orElseThrow(GameNotFoundException::new);
-        return new Game(dbGame);
+        return GameMapper.INSTANCE.gameEntityToGame(dbGame);
     }
 
     public List<Game> getGameOverview() {
-
         final Iterable<GameEntity> dbGames = this.gameRepository.findAll();
 
-        return StreamSupport.stream(dbGames.spliterator(), false)
-                .map(g -> new Game(g))
+        final List<GameEntity> gameEntityList = StreamSupport
+                .stream(dbGames.spliterator(), false)
                 .collect(Collectors.toList());
+
+        return GameMapper.INSTANCE.gameEntityToGame(gameEntityList);
+    }
+
+    public List<Game> saveGames(final List<Game> games) {
+        final List<GameEntity> gameEntities = GameMapper.INSTANCE.gameToGameEntity(games);
+        final Iterable<GameEntity> dbGames = this.gameRepository.saveAll(gameEntities);
+        final List<GameEntity> gameEntityList = StreamSupport
+                .stream(dbGames.spliterator(), false)
+                .collect(Collectors.toList());
+        return GameMapper.INSTANCE.gameEntityToGame(gameEntityList);
     }
 
     public Game saveGame(final Game game) {
-        final GameEntity dbGame = this.gameRepository.save(new GameEntity(game));
-        return new Game(dbGame);
+        final GameEntity gameEntity = GameMapper.INSTANCE.gameToGameEntity(game);
+        final GameEntity dbGame = this.gameRepository.save(gameEntity);
+        return GameMapper.INSTANCE.gameEntityToGame(dbGame);
     }
 }

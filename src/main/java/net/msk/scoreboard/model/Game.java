@@ -13,14 +13,12 @@ public class Game {
     public Game() {
     }
 
-    public Game(final GameEntity gameEntity) {
-        this.id = gameEntity.getId();
-        this.title = gameEntity.getTitle();
-        this.author = gameEntity.getAuthor();
-    }
-
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {

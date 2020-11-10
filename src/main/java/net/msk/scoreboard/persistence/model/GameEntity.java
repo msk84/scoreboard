@@ -2,11 +2,7 @@ package net.msk.scoreboard.persistence.model;
 
 import net.msk.scoreboard.model.Game;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class GameEntity {

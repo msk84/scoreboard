@@ -8,26 +8,29 @@
         <div class="container">
 
             <div class="container-fluid">
-                <div th:switch="${games}">
-                    <h2 th:case="null">No games yet!</h2>
+                <div th:switch="${matches}">
+                    <h2 th:case="null">No matches yet!</h2>
                     <div th:case="*">
                         <h2>Matches</h2>
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Title</th>
-                                <th>Author</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="game : ${games}">
-                                <td th:text="${game.id}"></td>
-                                <td th:text="${game.title}"></td>
-                                <td th:text="${game.author}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+
+                        <div th:each="match : ${matches}">
+                            <table style="border: 1px solid black">
+                                <tr>
+                                    <td><b><span th:text="${match.partyA}" /> : <span th:text="${match.partyB}" /></b></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr th:each="game : ${match.games}">
+                                                <td th:text="${game.author}"></td>
+                                                <td th:text="${game.title}"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
 

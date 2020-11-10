@@ -1,6 +1,6 @@
 package net.msk.scoreboard.web;
 
-import net.msk.scoreboard.service.GameService;
+import net.msk.scoreboard.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,7 @@ public class SimpleController {
 	String appName;
 
 	@Autowired
-	private GameService gameService;
+	private MatchService matchService;
 
 	@GetMapping("/")
 	public String homePage(final Model model) {
@@ -24,9 +24,9 @@ public class SimpleController {
 	}
 
 	@GetMapping("/matches")
-	public String gameOverview(final Model model) {
+	public String matchOverview(final Model model) {
 
-		model.addAttribute("games", this.gameService.getGameOverview());
+		model.addAttribute("matches", this.matchService.getMatchOverview());
 		return "matches";
 	}
 }

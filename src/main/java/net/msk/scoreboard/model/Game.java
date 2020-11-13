@@ -1,16 +1,21 @@
 package net.msk.scoreboard.model;
 
-import net.msk.scoreboard.persistence.model.GameEntity;
-
 public class Game {
 
     private long id;
 
-    private String title;
+    private GameStatus status;
 
-    private String author;
+    private String partyA;
+    private String partyB;
+
+    private Integer scoreA;
+    private Integer scoreB;
 
     public Game() {
+        this.status = GameStatus.PLANNED;
+        this.scoreA = 0;
+        this.scoreB = 0;
     }
 
     public long getId() {
@@ -21,19 +26,47 @@ public class Game {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public GameStatus getStatus() {
+        return status;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setStatus(GameStatus status) {
+        this.status = status;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getPartyA() {
+        return partyA;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setPartyA(String partyA) {
+        this.partyA = partyA;
+    }
+
+    public String getPartyB() {
+        return partyB;
+    }
+
+    public void setPartyB(String partyB) {
+        this.partyB = partyB;
+    }
+
+    public Integer getScoreA() {
+        return scoreA;
+    }
+
+    public void setScoreA(Integer scoreA) {
+        this.scoreA = scoreA;
+    }
+
+    public Integer getScoreB() {
+        return scoreB;
+    }
+
+    public void setScoreB(Integer scoreB) {
+        this.scoreB = scoreB;
+    }
+
+    public String getScore() {
+        return this.scoreA.toString() + " : " + this.scoreB.toString();
     }
 }

@@ -16,14 +16,16 @@
                         <div th:each="match : ${matches}">
                             <table style="border: 1px solid black">
                                 <tr>
-                                    <td><b><span th:text="${match.partyA}" /> : <span th:text="${match.partyB}" /></b></td>
+                                    <td align="center"><b><span th:text="${match.partyA}" /> : <span th:text="${match.partyB}" /></b></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <table>
                                             <tr th:each="game : ${match.games}">
-                                                <td th:text="${game.author}"></td>
-                                                <td th:text="${game.title}"></td>
+                                                <td th:text="${game.partyA}"></td>
+                                                <td> : </td>
+                                                <td th:text="${game.partyB}"></td>
+                                                <td th:text="${game.score}"></td>
                                             </tr>
                                         </table>
                                     </td>

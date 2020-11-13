@@ -1,7 +1,5 @@
 package net.msk.scoreboard.persistence.model;
 
-import net.msk.scoreboard.model.Game;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,19 +9,22 @@ public class GameEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(nullable = false, unique = true)
-    private String title;
+    @Column(nullable = false)
+    private String status;
 
     @Column(nullable = false)
-    private String author;
+    private String partyA;
+
+    @Column(nullable = false)
+    private String partyB;
+
+    @Column
+    private Integer scoreA;
+
+    @Column
+    private Integer scoreB;
 
     public GameEntity() {
-    }
-
-    public GameEntity(final Game game) {
-        this.id = game.getId();
-        this.title = game.getTitle();
-        this.author = game.getAuthor();
     }
 
     public long getId() {
@@ -34,19 +35,43 @@ public class GameEntity {
         this.id = id;
     }
 
-    public String getTitle() {
-        return this.title;
+    public String getStatus() {
+        return status;
     }
 
-    public void setTitle(final String title) {
-        this.title = title;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getAuthor() {
-        return this.author;
+    public String getPartyA() {
+        return partyA;
     }
 
-    public void setAuthor(final String author) {
-        this.author = author;
+    public void setPartyA(String partyA) {
+        this.partyA = partyA;
+    }
+
+    public String getPartyB() {
+        return partyB;
+    }
+
+    public void setPartyB(String partyB) {
+        this.partyB = partyB;
+    }
+
+    public Integer getScoreA() {
+        return scoreA;
+    }
+
+    public void setScoreA(Integer scoreA) {
+        this.scoreA = scoreA;
+    }
+
+    public Integer getScoreB() {
+        return scoreB;
+    }
+
+    public void setScoreB(Integer scoreB) {
+        this.scoreB = scoreB;
     }
 }

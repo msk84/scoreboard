@@ -1,6 +1,7 @@
 package net.msk.scoreboard.web;
 
 import net.msk.scoreboard.model.Game;
+import net.msk.scoreboard.model.GameScore;
 import net.msk.scoreboard.service.GameService;
 
 import org.slf4j.Logger;
@@ -27,7 +28,6 @@ public class GameController {
     @GetMapping("/{id}")
     public Game findOne(@PathVariable Long id) {
         LOGGER.info("Try loading game with id: {}", id);
-
         return this.gameService.getGame(id);
     }
 
@@ -37,4 +37,9 @@ public class GameController {
         return this.gameService.saveGame(game);
     }
 
+    @PostMapping("/{gameId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Game updateScore(@PathVariable final Long gameId, @RequestBody final GameScore score) {
+        return this.gameService.updateScore(gameId, score);
+    }
 }

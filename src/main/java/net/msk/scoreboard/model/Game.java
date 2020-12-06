@@ -50,23 +50,26 @@ public class Game {
         this.partyB = partyB;
     }
 
-    public Integer getScoreA() {
-        return scoreA;
+    public void setScore(final GameScore score) {
+        if (score.getScoreA() != null && score.getScoreB() != null && score.getScoreA() >= 0 && score.getScoreB() >= 0 && (score.getScoreA() + score.getScoreB()) < 6) {
+            this.scoreA = score.getScoreA();
+            this.scoreB = score.getScoreB();
+        }
     }
 
-    public void setScoreA(Integer scoreA) {
-        this.scoreA = scoreA;
+    public Integer getScoreA() {
+        return this.scoreA;
     }
 
     public Integer getScoreB() {
-        return scoreB;
+        return this.scoreB;
     }
 
-    public void setScoreB(Integer scoreB) {
-        this.scoreB = scoreB;
-    }
-
-    public String getScore() {
-        return this.scoreA.toString() + " : " + this.scoreB.toString();
+    public String getScoreString() {
+        if (this.status == GameStatus.PLANNED) {
+            return "- : -";
+        } else {
+            return this.scoreA.toString() + " : " + this.scoreB.toString();
+        }
     }
 }

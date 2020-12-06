@@ -6,6 +6,8 @@ public class Match {
 
     private long id;
 
+    private GameStatus status;
+
     private String partyA;
 
     private String partyB;
@@ -13,6 +15,7 @@ public class Match {
     private List<Game> games;
 
     public Match() {
+        this.status = GameStatus.PLANNED;
     }
 
     public long getId() {
@@ -21,6 +24,14 @@ public class Match {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public GameStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(GameStatus status) {
+        this.status = status;
     }
 
     public String getPartyA() {

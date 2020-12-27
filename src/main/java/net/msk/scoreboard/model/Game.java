@@ -5,6 +5,7 @@ public class Game {
     private long id;
 
     private GameStatus status;
+    private Integer index;
 
     private String partyA;
     private String partyB;
@@ -14,6 +15,13 @@ public class Game {
 
     public Game() {
         this.status = GameStatus.PLANNED;
+        this.scoreA = 0;
+        this.scoreB = 0;
+    }
+
+    public Game(final Integer index) {
+        this.status = GameStatus.PLANNED;
+        this.index = index;
         this.scoreA = 0;
         this.scoreB = 0;
     }
@@ -32,6 +40,14 @@ public class Game {
 
     public void setStatus(GameStatus status) {
         this.status = status;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     public String getPartyA() {

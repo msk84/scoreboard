@@ -16,7 +16,8 @@ public class MatchEntity {
     @Column(nullable = false)
     private String partyB;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @OrderBy("index asc")
     private Set<GameEntity> games;
 
     public MatchEntity() {

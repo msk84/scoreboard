@@ -3,27 +3,37 @@
     font-family: "Condensed";
     src: url(/fonts/robotocondensed.ttf) format("truetype");
 }
+
 body {
     padding-top: 3.5rem;
 }
+
 .matchView {
     border: 1px solid black;
 }
+
+.matchView > tr > td {
+    overflow-wrap: break-word;
+}
+
 .matchViewTitle {
     font-family: "Condensed", serif;
     text-align: center;
 }
+
 .matchViewScore {
     font-family: "Condensed", serif;
     text-align: center;
     font-weight: bold;
 }
+
 .matchViewA {
     font-family: "Condensed", serif;
     text-align: left;
     padding-left: 10px;
     width: 40%;
 }
+
 .matchViewB {
     font-family: "Condensed", serif;
     text-align: right;

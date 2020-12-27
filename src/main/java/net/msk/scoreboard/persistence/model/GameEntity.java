@@ -12,6 +12,9 @@ public class GameEntity {
     @Column(nullable = false)
     private String status;
 
+    @Column
+    private Integer index;
+
     @Column(nullable = false)
     private String partyA;
 
@@ -41,6 +44,14 @@ public class GameEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     public String getPartyA() {

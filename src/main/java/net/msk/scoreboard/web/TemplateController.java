@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,13 @@ public class TemplateController {
     public String matchOverview(final Model model) {
         model.addAttribute("matches", this.matchService.getMatchOverview());
         return "matchOverview";
+    }
+
+    @GetMapping("/match/{id}/details")
+    public String matchView(@PathVariable("id") final String matchId, final Model model) {
+        final Long id = Long.parseLong(matchId);
+        model.addAttribute("match", this.matchService.getMatch(id));
+        return "matchView";
     }
 
     @GetMapping("/match/create")

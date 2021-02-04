@@ -38,7 +38,8 @@ public class TemplateController {
     @GetMapping("/match/{id}/details")
     public String matchView(@PathVariable("id") final String matchId, final Model model) {
         final Long id = Long.parseLong(matchId);
-        model.addAttribute("match", this.matchService.getMatch(id));
+        final Match match = this.matchService.getMatch(id);
+        model.addAttribute("match", match);
         return "matchView";
     }
 
@@ -52,14 +53,17 @@ public class TemplateController {
             gamesList.add(new Game(i));
         }
         match.setGames(gamesList);
-
+        model.addAttribute("action", "add");
         model.addAttribute("match", match);
         return "matchEdit";
     }
 
-    @GetMapping("/match/edit")
-    public String matchEdit(final Model model) {
-        model.addAttribute("match", null);
+    @GetMapping("/match/{id}/edit")
+    public String matchEdit(@PathVariable("id") final String matchId, final Model model) {
+        final Long id = Long.parseLong(matchId);
+        final Match match = this.matchService.getMatch(id);
+        model.addAttribute("action", "edit");
+        model.addAttribute("match", match);
         return "matchEdit";
     }
 }

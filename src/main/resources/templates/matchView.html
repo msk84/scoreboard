@@ -9,37 +9,31 @@
 
         <div class="container-fluid">
             <div th:switch="${match}">
-                <h2 th:case="null">No matches yet!</h2>
+                <h2 th:case="null">Match not found.</h2>
                 <div th:case="*">
-                    <h2>Matches</h2>
-
+                    <h2>Boom</h2>
                     <div>
-                        <table class="matchView">
-                            <tr>
-                                <td align="center">
-                                    <table style="width: 100%;">
-
-                                    </table>
-                                </td>
-                            </tr>
+                        <table class="matchView" style="width: 100%">
                             <tr>
                                 <td>
                                     <table style="width: 100%;">
                                         <tr>
-                                            <th style="text-align: right;"><b><span th:text="${match.partyA}"/></b></th>
-                                            <th class="matchViewTitle"><b> : </b></th>
-                                            <th style="text-align: left;"><b><span th:text="${match.partyB}"/></b></th>
+                                            <th class="matchViewTitle" style="text-align: right"><span th:text="${match.partyA}"/></th>
+                                            <th class="matchViewTitle" style="text-align: center"> : </th>
+                                            <th class="matchViewTitle" style="text-align: left"><span th:text="${match.partyB}"/></th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" style="text-align: center;"><span th:text="${match.getStatus()}"></span> - <a th:href="@{/match/{id}/edit(id=${match.id})}">edit</a></td>
                                         </tr>
                                         <tr th:each="game : ${match.games}">
-                                            <td th:text="${game.partyA}" class="matchViewA"></td>
+                                            <td th:text="${game.partyA}" class="matchViewParty" style="text-align: right;"></td>
                                             <td th:text="${game.scoreString}" class="matchViewScore"></td>
-                                            <td th:text="${game.partyB}" class="matchViewB"></td>
+                                            <td th:text="${game.partyB}" class="matchViewParty" style="text-align: left;"></td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
                         </table>
-                        <p>&nbsp;</p>
                     </div>
 
                 </div>

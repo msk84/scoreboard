@@ -12,7 +12,6 @@
                 <h2 th:case="null">No matches yet!</h2>
                 <div th:case="*">
                     <h2>Matches</h2>
-
                     <div th:each="match : ${matches}">
                         <table class="matchView" style="width: 100%">
                             <tr>
@@ -24,7 +23,7 @@
                                             <th class="matchViewTitle" style="text-align: left"><span th:text="${match.partyB}"/></th>
                                         </tr>
                                         <tr>
-                                            <td colspan="3" style="text-align: center;"><span th:text="${match.getStatus()}"></span> - <a th:href="@{/match/{id}/details(id=${match.id})}">edit</a></td>
+                                            <td colspan="3" style="text-align: center;"><span th:text="${match.getStatus()}"></span> - <a th:href="@{/match/{id}/edit(id=${match.id})}">edit</a></td>
                                         </tr>
                                         <tr th:each="game : ${match.games}">
                                             <td th:text="${game.partyA}" class="matchViewParty" style="text-align: right;"></td>

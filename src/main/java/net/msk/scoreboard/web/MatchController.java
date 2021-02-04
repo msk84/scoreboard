@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping("/api/matches")
+@RequestMapping("/api/match")
 public class MatchController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchController.class);
@@ -21,8 +21,16 @@ public class MatchController {
         this.matchService = matchService;
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ModelAndView create(@ModelAttribute Match match, BindingResult errors, Model model) {
+        LOGGER.debug(match.toString());
+        this.matchService.saveMatch(match);
+
+        return new ModelAndView("redirect:/match/overview");
+    }
+
+    @PostMapping("/edit/{id}")
+    public ModelAndView edit(@ModelAttribute Match match, @PathVariable Long id, BindingResult errors, Model model) {
         LOGGER.debug(match.toString());
         this.matchService.saveMatch(match);
 

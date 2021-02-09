@@ -7,7 +7,9 @@
 <main role="main">
     <div class="container">
         <div class="container-fluid">
-            <form action="#" th:action="${action} == 'add' ? @{/api/match/add} : @{/api/match/edit/{id}(id=${match.id})}" th:object="${match}" method="post">
+            <form action="#"
+                  th:action="${action} == 'add' ? @{/api/match/add} : @{/api/match/edit/{id}(id=${match.id})}"
+                  th:object="${match}" method="post">
                 <table>
                     <tr>
                         <td>Team A</td>
@@ -17,13 +19,16 @@
                     </tr>
                     <tr th:each="game, gameIndex : ${match.games}">
                         <td th:text="'Player '"></td>
-                        <td><input type="text" th:field="*{games[__${gameIndex.index}__].partyA}" /></td>
-                        <td><input type="text" th:field="*{games[__${gameIndex.index}__].partyB}" /></td>
+                        <td><input type="text" th:field="*{games[__${gameIndex.index}__].partyA}"/></td>
+                        <td><input type="text" th:field="*{games[__${gameIndex.index}__].partyB}"/></td>
                         <td th:text="'Player '"></td>
-                        <td><input type="text" th:field="*{games[__${gameIndex.index}__].id}" /></td>
+                        <td>
+                            <input type="hidden" th:field="*{games[__${gameIndex.index}__].id}"/>
+                            <input type="hidden" th:field="*{games[__${gameIndex.index}__].index}"/>
+                        </td>
                     </tr>
                 </table>
-                <input type="submit" value="Save" />
+                <input type="submit" value="Save"/>
             </form>
         </div>
     </div>

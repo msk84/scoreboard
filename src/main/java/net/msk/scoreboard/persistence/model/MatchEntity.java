@@ -1,7 +1,7 @@
 package net.msk.scoreboard.persistence.model;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class MatchEntity {
@@ -18,7 +18,7 @@ public class MatchEntity {
 
     @OneToMany(cascade = CascadeType.ALL)
     @OrderBy("index asc")
-    private Set<GameEntity> games;
+    private List<GameEntity> games;
 
     public MatchEntity() {
     }
@@ -47,11 +47,11 @@ public class MatchEntity {
         this.partyB = partyB;
     }
 
-    public Set<GameEntity> getGames() {
+    public List<GameEntity> getGames() {
         return games;
     }
 
-    public void setGames(Set<GameEntity> games) {
+    public void setGames(List<GameEntity> games) {
         this.games = games;
     }
 }

@@ -4,6 +4,48 @@
 <body>
 <div th:replace="fragments/navbar.html :: navbar"></div>
 
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    function updateGameScore(gameId, isPartyA, isAdd) {
+
+        var scoreA = $("#game_" + gameId + "_A").text() * 1;
+        var scoreB = $("#game_" + gameId + "_B").text() * 1;
+
+        if(isAdd) {
+            isPartyA ? scoreA++ : scoreB++;
+        }
+        else {
+            isPartyA ? scoreA-- : scoreB--;
+        }
+
+        if((scoreA >= 0) && (scoreA <= 10) && (scoreB >= 0) && (scoreB <= 10) && (scoreA + scoreB <= 10)) {
+            $.ajax({
+                type: "POST",
+                url: "/api/games/" + gameId + "/setscore",
+                data: JSON.stringify({scoreParty: isPartyA ? "A" : "B", gameScore: isPartyA ? scoreA : scoreB}),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (isPartyA) {
+                        $("#game_" + gameId + "_A").text(data.scoreA);
+                    } else {
+                        $("#game_" + gameId + "_B").text(data.scoreB);
+                    }
+                },
+                error: function (errMsg) {
+                    console.log("updateGameScore::" + errMsg);
+                }
+            });
+        }
+        else {
+            console.log("updateGameScore::Tried to set invalid game score. - GameId: " + gameId + ", ScoreA: " + scoreA + ", ScoreB: " + scoreB + ", isPartyA: " + isPartyA + ", isAdd: " + isAdd);
+        }
+    }
+
+    /*]]>*/
+</script>
+
 <main role="main">
     <div class="container">
 
@@ -18,17 +60,21 @@
                                 <td>
                                     <table style="width: 100%;">
                                         <tr>
-                                            <th class="matchViewTitle" style="text-align: right"><span th:text="${match.partyA}"/></th>
+                                            <th class="matchViewTitle" colspan="2" style="text-align: right"><span th:text="${match.partyA}"/></th>
                                             <th class="matchViewTitle" style="text-align: center"> : </th>
-                                            <th class="matchViewTitle" style="text-align: left"><span th:text="${match.partyB}"/></th>
+                                            <th class="matchViewTitle" colspan="2" style="text-align: left"><span th:text="${match.partyB}"/></th>
                                         </tr>
                                         <tr>
-                                            <td colspan="3" style="text-align: center;"><span th:text="${match.getStatus()}"></span> - <a th:href="@{/match/{id}/edit(id=${match.id})}">edit</a></td>
+                                            <td colspan="5" style="text-align: center;"><span th:text="${match.getStatus()}"></span> - <a th:href="@{/match/{id}/edit(id=${match.id})}">edit</a></td>
                                         </tr>
                                         <tr th:each="game : ${match.games}">
-                                            <td th:text="${game.partyA}" class="matchViewParty" style="text-align: right;"></td>
-                                            <td th:text="${game.scoreString}" class="matchViewScore"></td>
-                                            <td th:text="${game.partyB}" class="matchViewParty" style="text-align: left;"></td>
+                                            <td width="10%"><a href="#"><img src="/images/minus.svg" width="25%" th:onclick="|updateGameScore('${game.id}', true, false)|" /></a><a href="#"><img src="/images/plus.svg" width="25%" th:onclick="|updateGameScore('${game.id}', true, true)|" /></a></td>
+                                            <td width="32%" th:text="${game.partyA}" class="matchViewParty" style="text-align: right;"></td>
+                                            <td width="16%" class="matchViewScore">
+                                                <span th:id="game_ + ${game.id} + _A" th:text="${game.getScoreA()}"></span> : <span th:id="game_ + ${game.id} + _B" th:text="${game.getScoreB()}"></span>
+                                            </td>
+                                            <td width="32%" th:text="${game.partyB}" class="matchViewParty" style="text-align: left;"></td>
+                                            <td width="10%" style="text-align: right;"><a href="#"><img src="/images/minus.svg" width="25%" th:onclick="|updateGameScore('${game.id}', false, false)|" /></a><a href="#"><img src="/images/plus.svg" width="25%" th:onclick="|updateGameScore('${game.id}', false, true)|" /></a></td>
                                         </tr>
                                     </table>
                                 </td>

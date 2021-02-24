@@ -2,7 +2,8 @@ package net.msk.scoreboard.service;
 
 import net.msk.scoreboard.mapper.GameMapper;
 import net.msk.scoreboard.model.Game;
-import net.msk.scoreboard.model.GameScore;
+import net.msk.scoreboard.model.GameScoreUpdate;
+import net.msk.scoreboard.model.GameStatus;
 import net.msk.scoreboard.persistence.model.GameEntity;
 import net.msk.scoreboard.persistence.repo.GameRepository;
 import net.msk.scoreboard.web.exception.GameNotFoundException;
@@ -54,15 +55,18 @@ public class GameService {
         return GameMapper.INSTANCE.gameEntityToGame(dbGame);
     }
 
-    public Game updateScore(final Long gameId, final GameScore score) {
+    public Game updateScore(final Long gameId, final GameScoreUpdate score) {
         final GameEntity dbGame = this.gameRepository.findById(gameId)
                 .orElseThrow(GameNotFoundException::new);
-
-        final Game game = GameMapper.INSTANCE.gameEntityToGame(dbGame);
-        game.setScore(score);
-
-        this.gameRepository.save(GameMapper.INSTANCE.gameToGameEntity(game));
-
-        return game;
+        dbGame.setStatus(GameStatus.RUNNING.toString());
+        if(score.getScoreParty().equals("A")) {
+            dbGame.setScoreA(score.getGameScore());
+        }
+        else {
+            dbGame.setScoreB(score.getGameScore());
+        }
+        final GameEntity result = this.gameRepository.save(dbGame);
+        final Game realResult = GameMapper.INSTANCE.gameEntityToGame(result);
+        return realResult;
     }
 }

@@ -13,8 +13,8 @@
                 <table>
                     <tr>
                         <td>Team A</td>
-                        <td><input type="text" th:field="*{partyA}"></td>
-                        <td><input type="text" th:field="*{partyB}"></td>
+                        <td><input type="text" th:field="*{partyA}" th:required="required"></td>
+                        <td><input type="text" th:field="*{partyB}" th:required="required"></td>
                         <td>Team B</td>
                     </tr>
                     <tr th:each="game, gameIndex : ${match.games}">

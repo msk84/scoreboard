@@ -10,6 +10,7 @@ body {
 
 .matchView {
     border: 1px solid black;
+    margin-bottom: 25px;
 }
 
 .matchView > tr > td {
@@ -32,6 +33,6 @@ body {
 .matchViewParty {
     font-family: "Condensed", serif;
     font-size: 1.5vw;
-    padding-left: 10px;
-    width: 40%;
+    /*padding-left: 10px;
+    width: 40%;*/
 }

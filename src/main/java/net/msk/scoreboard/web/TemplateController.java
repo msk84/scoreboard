@@ -31,7 +31,8 @@ public class TemplateController {
 
     @GetMapping("/match/overview")
     public String matchOverview(final Model model) {
-        model.addAttribute("matches", this.matchService.getMatchOverview());
+        final List<Match> matches = this.matchService.getMatchOverview();
+        model.addAttribute("matches", matches);
         return "matchOverview";
     }
 
@@ -66,4 +67,5 @@ public class TemplateController {
         model.addAttribute("match", match);
         return "matchEdit";
     }
+
 }

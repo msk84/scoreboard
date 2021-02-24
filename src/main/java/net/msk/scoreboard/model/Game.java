@@ -20,10 +20,8 @@ public class Game {
     }
 
     public Game(final Integer index) {
-        this.status = GameStatus.PLANNED;
+        this();
         this.index = index;
-        this.scoreA = 0;
-        this.scoreB = 0;
     }
 
     public long getId() {
@@ -66,26 +64,31 @@ public class Game {
         this.partyB = partyB;
     }
 
-    public void setScore(final GameScore score) {
-        if (score.getScoreA() != null && score.getScoreB() != null && score.getScoreA() >= 0 && score.getScoreB() >= 0 && (score.getScoreA() + score.getScoreB()) < 6) {
-            this.scoreA = score.getScoreA();
-            this.scoreB = score.getScoreB();
-        }
-    }
-
     public Integer getScoreA() {
         return this.scoreA;
+    }
+
+    public String getScoreAString() { return this.scoreA == null ? "0" : this.scoreA.toString(); }
+
+    public void setScoreA(Integer scoreA) {
+        this.scoreA = scoreA;
     }
 
     public Integer getScoreB() {
         return this.scoreB;
     }
 
+    public String getScoreBString() { return this.scoreB == null ? "0" : this.scoreB.toString(); }
+
+    public void setScoreB(Integer scoreB) {
+        this.scoreB = scoreB;
+    }
+
     public String getScoreString() {
         if (this.status == GameStatus.PLANNED) {
             return "- : -";
         } else {
-            return this.scoreA.toString() + " : " + this.scoreB.toString();
+            return this.getScoreA() + " : " + this.getScoreB();
         }
     }
 }

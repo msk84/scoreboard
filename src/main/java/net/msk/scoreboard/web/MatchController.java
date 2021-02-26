@@ -1,9 +1,13 @@
 package net.msk.scoreboard.web;
 
+import net.msk.scoreboard.model.Game;
+import net.msk.scoreboard.model.GameScoreUpdate;
 import net.msk.scoreboard.model.Match;
+import net.msk.scoreboard.model.Party;
 import net.msk.scoreboard.service.MatchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +39,17 @@ public class MatchController {
         this.matchService.saveMatch(match);
 
         return new ModelAndView("redirect:/match/overview");
+    }
+
+    @PostMapping("/{matchId}/game/{gameId}/incrementScore/{party}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Match incrementGameScore(@PathVariable final Long matchId, @PathVariable final Long gameId, @PathVariable final Party party) {
+        return this.matchService.incrementGameScore(matchId, gameId, party);
+    }
+
+    @PostMapping("/{matchId}/game/{gameId}/decrementScore/{party}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Match decrementGameScore(@PathVariable final Long matchId, @PathVariable final Long gameId, @PathVariable final Party party) {
+        return this.matchService.decrementGameScore(matchId, gameId, party);
     }
 }

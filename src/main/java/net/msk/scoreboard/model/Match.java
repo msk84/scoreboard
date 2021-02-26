@@ -1,5 +1,7 @@
 package net.msk.scoreboard.model;
 
+import net.msk.scoreboard.web.exception.GameNotFoundException;
+
 import java.util.List;
 
 public class Match {
@@ -8,14 +10,18 @@ public class Match {
 
     private GameStatus status;
 
-    private String partyA;
+    private String partyHome;
+    private String partyGuest;
 
-    private String partyB;
+    private Integer scoreHome;
+    private Integer scoreGuest;
 
     private List<Game> games;
 
     public Match() {
         this.status = GameStatus.PLANNED;
+        this.scoreHome = 0;
+        this.scoreGuest = 0;
     }
 
     public long getId() {
@@ -34,20 +40,20 @@ public class Match {
         this.status = status;
     }
 
-    public String getPartyA() {
-        return partyA;
+    public String getPartyHome() {
+        return partyHome;
     }
 
-    public void setPartyA(String partyA) {
-        this.partyA = partyA;
+    public void setPartyHome(String partyHome) {
+        this.partyHome = partyHome;
     }
 
-    public String getPartyB() {
-        return partyB;
+    public String getPartyGuest() {
+        return partyGuest;
     }
 
-    public void setPartyB(String partyB) {
-        this.partyB = partyB;
+    public void setPartyGuest(String partyGuest) {
+        this.partyGuest = partyGuest;
     }
 
     public List<Game> getGames() {
@@ -57,4 +63,21 @@ public class Match {
     public void setGames(List<Game> games) {
         this.games = games;
     }
+
+    public Integer getScoreHome() {
+        return scoreHome;
+    }
+
+    public void setScoreHome(Integer scoreHome) {
+        this.scoreHome = scoreHome;
+    }
+
+    public Integer getScoreGuest() {
+        return scoreGuest;
+    }
+
+    public void setScoreGuest(Integer scoreGuest) {
+        this.scoreGuest = scoreGuest;
+    }
+
 }

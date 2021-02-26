@@ -60,10 +60,10 @@ public class GameService {
                 .orElseThrow(GameNotFoundException::new);
         dbGame.setStatus(GameStatus.RUNNING.toString());
         if(score.getScoreParty().equals("A")) {
-            dbGame.setScoreA(score.getGameScore());
+            dbGame.setScoreHome(score.getGameScore());
         }
         else {
-            dbGame.setScoreB(score.getGameScore());
+            dbGame.setScoreGuest(score.getGameScore());
         }
         final GameEntity result = this.gameRepository.save(dbGame);
         final Game realResult = GameMapper.INSTANCE.gameEntityToGame(result);

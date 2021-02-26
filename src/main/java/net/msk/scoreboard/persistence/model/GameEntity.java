@@ -1,5 +1,8 @@
 package net.msk.scoreboard.persistence.model;
 
+import net.msk.scoreboard.model.GameStatus;
+import net.msk.scoreboard.model.Party;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,16 +19,16 @@ public class GameEntity {
     private Integer index;
 
     @Column(nullable = false)
-    private String partyA;
+    private String partyHome;
 
     @Column(nullable = false)
-    private String partyB;
+    private String partyGuest;
 
     @Column
-    private Integer scoreA;
+    private Integer scoreHome;
 
     @Column
-    private Integer scoreB;
+    private Integer scoreGuest;
 
     public GameEntity() {
     }
@@ -54,35 +57,73 @@ public class GameEntity {
         this.index = index;
     }
 
-    public String getPartyA() {
-        return partyA;
+    public String getPartyHome() {
+        return partyHome;
     }
 
-    public void setPartyA(String partyA) {
-        this.partyA = partyA;
+    public void setPartyHome(String partyHome) {
+        this.partyHome = partyHome;
     }
 
-    public String getPartyB() {
-        return partyB;
+    public String getPartyGuest() {
+        return partyGuest;
     }
 
-    public void setPartyB(String partyB) {
-        this.partyB = partyB;
+    public void setPartyGuest(String partyGuest) {
+        this.partyGuest = partyGuest;
     }
 
-    public Integer getScoreA() {
-        return scoreA;
+    public Integer getScoreHome() {
+        return scoreHome;
     }
 
-    public void setScoreA(Integer scoreA) {
-        this.scoreA = scoreA;
+    public void setScoreHome(Integer scoreHome) {
+        this.scoreHome = scoreHome;
     }
 
-    public Integer getScoreB() {
-        return scoreB;
+    public Integer getScoreGuest() {
+        return scoreGuest;
     }
 
-    public void setScoreB(Integer scoreB) {
-        this.scoreB = scoreB;
+    public void setScoreGuest(Integer scoreGuest) {
+        this.scoreGuest = scoreGuest;
+    }
+
+    public void incrementScore(final Party party) {
+        if (!this.status.equals(GameStatus.FINISHED.name())) {
+            if (Party.Home == party) {
+                if (this.scoreHome < 3) {
+                    this.scoreHome++;
+                }
+            } else {
+                if (this.scoreGuest < 3) {
+                    this.scoreGuest++;
+                }
+            }
+            this.updateGameStatus();
+        }
+    }
+
+    public void decrementScore(final Party party) {
+        if (Party.Home == party) {
+            if (this.scoreHome > 0) {
+                this.scoreHome--;
+            }
+        } else {
+            if (this.scoreGuest > 0) {
+                this.scoreGuest--;
+            }
+        }
+        this.updateGameStatus();
+    }
+
+    private void updateGameStatus() {
+        if (this.scoreHome < 1 && this.scoreGuest < 1) {
+            this.status = GameStatus.PLANNED.name();
+        } else if (this.scoreHome > 2 || scoreGuest > 2) {
+            this.status = GameStatus.FINISHED.name();
+        } else {
+            this.status = GameStatus.RUNNING.name();
+        }
     }
 }

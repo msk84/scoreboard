@@ -7,16 +7,16 @@ public class Game {
     private GameStatus status;
     private Integer index;
 
-    private String partyA;
-    private String partyB;
+    private String partyHome;
+    private String partyGuest;
 
-    private Integer scoreA;
-    private Integer scoreB;
+    private Integer scoreHome;
+    private Integer scoreGuest;
 
     public Game() {
         this.status = GameStatus.PLANNED;
-        this.scoreA = 0;
-        this.scoreB = 0;
+        this.scoreHome = 0;
+        this.scoreGuest = 0;
     }
 
     public Game(final Integer index) {
@@ -48,47 +48,48 @@ public class Game {
         this.index = index;
     }
 
-    public String getPartyA() {
-        return partyA;
+    public String getPartyHome() {
+        return partyHome;
     }
 
-    public void setPartyA(String partyA) {
-        this.partyA = partyA;
+    public void setPartyHome(String partyHome) {
+        this.partyHome = partyHome;
     }
 
-    public String getPartyB() {
-        return partyB;
+    public String getPartyGuest() {
+        return partyGuest;
     }
 
-    public void setPartyB(String partyB) {
-        this.partyB = partyB;
+    public void setPartyGuest(String partyGuest) {
+        this.partyGuest = partyGuest;
     }
 
-    public Integer getScoreA() {
-        return this.scoreA;
+    public Integer getScoreHome() {
+        return this.scoreHome;
     }
 
-    public String getScoreAString() { return this.scoreA == null ? "0" : this.scoreA.toString(); }
+    public String getScoreAString() { return this.scoreHome == null ? "0" : this.scoreHome.toString(); }
 
-    public void setScoreA(Integer scoreA) {
-        this.scoreA = scoreA;
+    public void setScoreHome(Integer scoreHome) {
+        this.scoreHome = scoreHome;
     }
 
-    public Integer getScoreB() {
-        return this.scoreB;
+    public Integer getScoreGuest() {
+        return this.scoreGuest;
     }
 
-    public String getScoreBString() { return this.scoreB == null ? "0" : this.scoreB.toString(); }
+    public String getScoreBString() { return this.scoreGuest == null ? "0" : this.scoreGuest.toString(); }
 
-    public void setScoreB(Integer scoreB) {
-        this.scoreB = scoreB;
+    public void setScoreGuest(Integer scoreGuest) {
+        this.scoreGuest = scoreGuest;
     }
 
     public String getScoreString() {
         if (this.status == GameStatus.PLANNED) {
             return "- : -";
         } else {
-            return this.getScoreA() + " : " + this.getScoreB();
+            return this.getScoreHome() + " : " + this.getScoreGuest();
         }
     }
+
 }

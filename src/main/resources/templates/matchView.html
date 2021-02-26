@@ -18,17 +18,17 @@
                                 <td>
                                     <table style="width: 100%;">
                                         <tr>
-                                            <th class="matchViewTitle" style="text-align: right"><span th:text="${match.partyA}"/></th>
+                                            <th class="matchViewTitle" style="text-align: right"><span th:text="${match.partyHome}"/></th>
                                             <th class="matchViewTitle" style="text-align: center"> : </th>
-                                            <th class="matchViewTitle" style="text-align: left"><span th:text="${match.partyB}"/></th>
+                                            <th class="matchViewTitle" style="text-align: left"><span th:text="${match.partyGuest}"/></th>
                                         </tr>
                                         <tr>
                                             <td colspan="3" style="text-align: center;"><span th:text="${match.getStatus()}"></span> - <a th:href="@{/match/{id}/edit(id=${match.id})}">edit</a></td>
                                         </tr>
                                         <tr th:each="game : ${match.games}">
-                                            <td th:text="${game.partyA}" class="matchViewParty" style="text-align: right;"></td>
+                                            <td th:text="${game.partyHome}" class="matchViewParty" style="text-align: right;"></td>
                                             <td th:text="${game.scoreString}" class="matchViewScore"></td>
-                                            <td th:text="${game.partyB}" class="matchViewParty" style="text-align: left;"></td>
+                                            <td th:text="${game.partyGuest}" class="matchViewParty" style="text-align: left;"></td>
                                         </tr>
                                     </table>
                                 </td>

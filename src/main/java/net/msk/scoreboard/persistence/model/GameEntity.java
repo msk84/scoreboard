@@ -13,7 +13,7 @@ public class GameEntity {
     private long id;
 
     @Column(nullable = false)
-    private String status;
+    private GameStatus status;
 
     @Column
     private Integer index;
@@ -41,11 +41,11 @@ public class GameEntity {
         this.id = id;
     }
 
-    public String getStatus() {
+    public GameStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(GameStatus status) {
         this.status = status;
     }
 
@@ -90,7 +90,7 @@ public class GameEntity {
     }
 
     public void incrementScore(final Party party) {
-        if (!this.status.equals(GameStatus.FINISHED.name())) {
+        if (this.status != GameStatus.FINISHED) {
             if (Party.Home == party) {
                 if (this.scoreHome < 3) {
                     this.scoreHome++;
@@ -119,11 +119,11 @@ public class GameEntity {
 
     private void updateGameStatus() {
         if (this.scoreHome < 1 && this.scoreGuest < 1) {
-            this.status = GameStatus.PLANNED.name();
+            this.status = GameStatus.PLANNED;
         } else if (this.scoreHome > 2 || scoreGuest > 2) {
-            this.status = GameStatus.FINISHED.name();
+            this.status = GameStatus.FINISHED;
         } else {
-            this.status = GameStatus.RUNNING.name();
+            this.status = GameStatus.RUNNING;
         }
     }
 }

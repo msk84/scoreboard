@@ -100,12 +100,12 @@ public class MatchEntity {
     }
 
     private void updateMatchScore() {
-        this.scoreHome = (int)this.games.stream()
-                .filter(game -> GameStatus.FINISHED.name().equals(game.getStatus()) && game.getScoreHome() > 2)
+        this.scoreHome = (int) this.games.stream()
+                .filter(game -> GameStatus.FINISHED == game.getStatus() && game.getScoreHome() > 2)
                 .count();
 
-        this.scoreGuest = (int)this.games.stream()
-                .filter(game -> GameStatus.FINISHED.name().equals(game.getStatus()) && game.getScoreGuest() > 2)
+        this.scoreGuest = (int) this.games.stream()
+                .filter(game -> GameStatus.FINISHED == game.getStatus() && game.getScoreGuest() > 2)
                 .count();
     }
 }

@@ -68,8 +68,6 @@ public class Game {
         return this.scoreHome;
     }
 
-    public String getScoreAString() { return this.scoreHome == null ? "0" : this.scoreHome.toString(); }
-
     public void setScoreHome(Integer scoreHome) {
         this.scoreHome = scoreHome;
     }
@@ -78,18 +76,8 @@ public class Game {
         return this.scoreGuest;
     }
 
-    public String getScoreBString() { return this.scoreGuest == null ? "0" : this.scoreGuest.toString(); }
-
     public void setScoreGuest(Integer scoreGuest) {
         this.scoreGuest = scoreGuest;
     }
-
-    public String getScoreString() {
-        if (this.status == GameStatus.PLANNED) {
-            return "- : -";
-        } else {
-            return this.getScoreHome() + " : " + this.getScoreGuest();
-        }
-    }
-
+    
 }

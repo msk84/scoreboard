@@ -8,38 +8,40 @@
     <div class="container">
 
         <div class="container-fluid">
-            <div th:switch="${matches}">
-                <h2 th:case="null">No matches yet!</h2>
-                <div th:case="*">
-                    <h2>Matches</h2>
-                    <div th:each="match : ${matches}">
-                        <table class="matchView" style="width: 100%">
-                            <tr>
-                                <td>
-                                    <table style="width: 100%;">
-                                        <tr>
-                                            <th class="matchViewTitle" colspan="2" style="text-align: right"><span th:text="${match.partyHome}"/></th>
-                                            <th class="matchViewTitle" style="text-align: center"><span th:id="match_ + ${match.id} + _scoreHome" th:text="${match.scoreHome}" /> : <span th:id="match_ + ${match.id} + _scoreGuest" th:text="${match.scoreGuest}" /></th>
-                                            <th class="matchViewTitle" colspan="2" style="text-align: left"><span th:text="${match.partyGuest}"/></th>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="5" style="text-align: center;"><span th:text="${match.getStatus()}"></span> - <a th:href="@{/match/{id}/edit(id=${match.id})}">edit</a></td>
-                                        </tr>
-                                        <tr th:each="game : ${match.games}">
-                                            <td width="10%"><span class="hiddenButtons"><a href="#"><img src="/images/minus.svg" width="25%" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, false)|" /></a> <a href="#"><img src="/images/plus.svg" width="25%" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, true)|" /></a></span></td>
-                                            <td width="32%" th:text="${game.partyHome}" class="matchViewParty" style="text-align: right;"></td>
-                                            <td width="16%" class="matchViewScore">
-                                                <span th:id="game_ + ${game.id} + _scoreHome" th:text="${game.getScoreHome()}"></span> : <span th:id="game_ + ${game.id} + _scoreGuest" th:text="${game.getScoreGuest()}"></span>
-                                            </td>
-                                            <td width="32%" th:text="${game.partyGuest}" class="matchViewParty" style="text-align: left;"></td>
-                                            <td width="10%" style="text-align: right;"><span class="hiddenButtons"><a href="#"><img src="/images/minus.svg" width="25%" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, false)|" /></a><a href="#"><img src="/images/plus.svg" width="25%" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, true)|" /></a></span></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
 
+            <div th:if="${#lists.isEmpty(matches)}">
+                <h2>No matches yet</h2>
+                <div><a href="/match/create">Create one!</a></div>
+            </div>
+
+            <div th:if="${not #lists.isEmpty(matches)}">
+                <h2>Matches</h2>
+                <div th:each="match : ${matches}">
+                    <table class="matchView" style="width: 100%">
+                        <tr>
+                            <td>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <th class="matchViewTitle" colspan="2" style="text-align: right"><span th:text="${match.partyHome}"/></th>
+                                        <th class="matchViewTitle" style="text-align: center"><span th:id="match_ + ${match.id} + _scoreHome" th:text="${match.scoreHome}" /> : <span th:id="match_ + ${match.id} + _scoreGuest" th:text="${match.scoreGuest}" /></th>
+                                        <th class="matchViewTitle" colspan="2" style="text-align: left"><span th:text="${match.partyGuest}"/></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" style="text-align: center;"><span th:text="${match.getStatus()}"></span> - <a th:href="@{/match/{id}/edit(id=${match.id})}">edit</a></td>
+                                    </tr>
+                                    <tr th:each="game : ${match.games}">
+                                        <td width="10%"><span class="hiddenButtons"><a href="#"><img src="/images/minus.svg" width="25%" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, false)|" /></a> <a href="#"><img src="/images/plus.svg" width="25%" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, true)|" /></a></span></td>
+                                        <td width="32%" th:text="${game.partyHome}" class="matchViewParty" style="text-align: right;"></td>
+                                        <td width="16%" class="matchViewScore">
+                                            <span th:id="game_ + ${game.id} + _scoreHome" th:text="${game.getScoreHome()}"></span> : <span th:id="game_ + ${game.id} + _scoreGuest" th:text="${game.getScoreGuest()}"></span>
+                                        </td>
+                                        <td width="32%" th:text="${game.partyGuest}" class="matchViewParty" style="text-align: left;"></td>
+                                        <td width="10%" style="text-align: right;"><span class="hiddenButtons"><a href="#"><img src="/images/minus.svg" width="25%" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, false)|" /></a><a href="#"><img src="/images/plus.svg" width="25%" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, true)|" /></a></span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 

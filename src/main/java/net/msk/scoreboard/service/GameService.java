@@ -12,10 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 @Service
 public class GameService {
 
@@ -30,43 +26,10 @@ public class GameService {
         return GameMapper.INSTANCE.gameEntityToGame(dbGame);
     }
 
-    public List<Game> getGameOverview() {
-        final Iterable<GameEntity> dbGames = this.gameRepository.findAll();
-
-        final List<GameEntity> gameEntityList = StreamSupport
-                .stream(dbGames.spliterator(), false)
-                .collect(Collectors.toList());
-
-        return GameMapper.INSTANCE.gameEntityToGame(gameEntityList);
-    }
-
-    public List<Game> saveGames(final List<Game> games) {
-        final List<GameEntity> gameEntities = GameMapper.INSTANCE.gameToGameEntity(games);
-        final Iterable<GameEntity> dbGames = this.gameRepository.saveAll(gameEntities);
-        final List<GameEntity> gameEntityList = StreamSupport
-                .stream(dbGames.spliterator(), false)
-                .collect(Collectors.toList());
-        return GameMapper.INSTANCE.gameEntityToGame(gameEntityList);
-    }
-
     public Game saveGame(final Game game) {
         final GameEntity gameEntity = GameMapper.INSTANCE.gameToGameEntity(game);
         final GameEntity dbGame = this.gameRepository.save(gameEntity);
         return GameMapper.INSTANCE.gameEntityToGame(dbGame);
     }
 
-    public Game updateScore(final Long gameId, final GameScoreUpdate score) {
-        final GameEntity dbGame = this.gameRepository.findById(gameId)
-                .orElseThrow(GameNotFoundException::new);
-        dbGame.setStatus(GameStatus.RUNNING.toString());
-        if(score.getScoreParty().equals("A")) {
-            dbGame.setScoreHome(score.getGameScore());
-        }
-        else {
-            dbGame.setScoreGuest(score.getGameScore());
-        }
-        final GameEntity result = this.gameRepository.save(dbGame);
-        final Game realResult = GameMapper.INSTANCE.gameEntityToGame(result);
-        return realResult;
-    }
 }

@@ -1,7 +1,5 @@
 package net.msk.scoreboard.model;
 
-import net.msk.scoreboard.web.exception.GameNotFoundException;
-
 import java.util.List;
 
 public class Match {

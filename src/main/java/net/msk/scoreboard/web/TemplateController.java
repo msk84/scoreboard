@@ -35,14 +35,6 @@ public class TemplateController {
         return "matchOverview";
     }
 
-    @GetMapping("/match/{id}/details")
-    public String matchView(@PathVariable("id") final String matchId, final Model model) {
-        final Long id = Long.parseLong(matchId);
-        final Match match = this.matchService.getMatch(id);
-        model.addAttribute("match", match);
-        return "matchView";
-    }
-
     @GetMapping("/match/create")
     public String matchCreate(final Model model) {
         final Match match = new Match();
@@ -66,5 +58,4 @@ public class TemplateController {
         model.addAttribute("match", match);
         return "matchEdit";
     }
-
 }

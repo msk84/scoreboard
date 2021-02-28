@@ -31,6 +31,8 @@ public class GameEntity {
     private Integer scoreGuest;
 
     public GameEntity() {
+        this.scoreHome = 0;
+        this.scoreGuest = 0;
     }
 
     public long getId() {

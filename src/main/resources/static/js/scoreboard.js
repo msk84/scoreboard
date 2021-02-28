@@ -11,7 +11,7 @@ function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
         isPartyHome ? currentScoreHome-- : currentScoreGuest--;
     }
 
-    if((currentScoreHome >= 0) && (currentScoreHome <= 10) && (currentScoreGuest >= 0) && (currentScoreGuest <= 10) && (currentScoreHome + currentScoreGuest <= 10)) {
+    if((currentScoreHome >= 0) && (currentScoreHome <= 3) && (currentScoreGuest >= 0) && (currentScoreGuest <= 3) && (currentScoreHome + currentScoreGuest <= 5)) {
         $.ajax({
             type: "POST",
             url: "/api/match/" + matchId + "/game/" + gameId + "/" + (isAdd ? "incrementScore" : "decrementScore") + "/" + (isPartyHome ? "Home" : "Guest"),

@@ -30,11 +30,6 @@ body {
     font-weight: bold;
 }
 
-.matchViewParty {
-    font-family: "Condensed", serif;
-    font-size: 1.5vw;
-}
-
 .hiddenButtons a {
     visibility: hidden;
 }
@@ -57,4 +52,28 @@ body {
 }
 .hidden {
     display: none;
+}
+
+/* Mobile display */
+@media (max-width: 800px) {
+    .iconLink {
+        width: 4vw;
+    }
+
+    .matchViewParty {
+        font-family: "Condensed", serif;
+        font-size: 2.5vw;
+    }
+}
+
+/* Computer display */
+@media (min-width: 800px) {
+    .iconLink {
+        width: 2vw;
+    }
+
+    .matchViewParty {
+        font-family: "Condensed", serif;
+        font-size: 1.5vw;
+    }
 }

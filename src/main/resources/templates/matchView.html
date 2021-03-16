@@ -1,0 +1,53 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header.html :: header"></head>
+<body>
+<div th:replace="fragments/navbar.html :: navbar"></div>
+
+<main role="main">
+    <div class="container">
+
+        <div class="container-fluid">
+
+            <div th:if="${match == null}">
+                <h2>No match not found!</h2>
+                <div><a href="/match/create">Create one!</a></div>
+            </div>
+
+            <div th:if="${match != null}">
+                <h2>Match</h2>
+                <table class="matchView" style="width: 100%">
+                    <tr>
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <th class="matchViewTitle" colspan="2" style="text-align: right"><span th:text="${match.partyHome}"/></th>
+                                    <th class="matchViewTitle" style="text-align: center"><span th:id="match_ + ${match.id} + _scoreHome" th:text="${match.scoreHome}" /> : <span th:id="match_ + ${match.id} + _scoreGuest" th:text="${match.scoreGuest}" /></th>
+                                    <th class="matchViewTitle" colspan="2" style="text-align: left"><span th:text="${match.partyGuest}"/></th>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="text-align: center;"><span th:text="${match.getStatus()}"></span> - <a th:href="@{/match/{id}/edit(id=${match.id})}"><img src="/images/edit-pencil.svg" class="iconLink" /></a></td>
+                                </tr>
+                                <tr th:each="game : ${match.games}">
+                                    <td style="width: 12%; white-space: nowrap;"><a href="#"><img src="/images/minus-outline.svg" class="iconLink" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, false)|" /></a>&nbsp;<a href="#"><img src="/images/add-outline.svg" class="iconLink" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, true)|" /></a></td>
+                                    <td th:text="${game.partyHome}" class="matchViewParty" style="width: 30%; text-align: right;"></td>
+                                    <td class="matchViewScore" style="width: 16%">
+                                        <span th:id="game_ + ${game.id} + _scoreHome" th:text="${game.getScoreHome()}"></span> : <span th:id="game_ + ${game.id} + _scoreGuest" th:text="${game.getScoreGuest()}"></span>
+                                    </td>
+                                    <td th:text="${game.partyGuest}" class="matchViewParty" style="width: 30%; text-align: left;"></td>
+                                    <td style="width: 12%; white-space: nowrap; text-align: right;"><a href="#"><img src="/images/minus-outline.svg" class="iconLink" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, false)|" /></a>&nbsp;<a href="#"><img src="/images/add-outline.svg" class="iconLink" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, true)|" /></a></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<div th:replace="fragments/footer.html :: footer"></div>
+
+</body>
+</html>

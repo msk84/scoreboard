@@ -54,14 +54,6 @@ public class Match {
         this.partyGuest = partyGuest;
     }
 
-    public List<Game> getGames() {
-        return games;
-    }
-
-    public void setGames(List<Game> games) {
-        this.games = games;
-    }
-
     public Integer getScoreHome() {
         return scoreHome;
     }
@@ -78,4 +70,11 @@ public class Match {
         this.scoreGuest = scoreGuest;
     }
 
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
+    }
 }

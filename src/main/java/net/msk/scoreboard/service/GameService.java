@@ -29,6 +29,8 @@ public class GameService {
     public Game saveGame(final Game game) {
         final GameEntity gameEntity = GameMapper.INSTANCE.gameToGameEntity(game);
         final GameEntity dbGame = this.gameRepository.save(gameEntity);
+        GlobalRevisionCounter.increment();
+
         return GameMapper.INSTANCE.gameEntityToGame(dbGame);
     }
 

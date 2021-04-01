@@ -2,6 +2,7 @@ package net.msk.scoreboard.web;
 
 import net.msk.scoreboard.model.Game;
 import net.msk.scoreboard.model.Match;
+import net.msk.scoreboard.service.GlobalRevisionCounter;
 import net.msk.scoreboard.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,7 @@ public class TemplateController {
     public String matchOverview(final Model model) {
         final List<Match> matches = this.matchService.getMatchOverview();
         model.addAttribute("matches", matches);
+        model.addAttribute("globalRevision", GlobalRevisionCounter.getRevision());
         return "matchOverview";
     }
 
@@ -40,6 +42,7 @@ public class TemplateController {
         final Long matchId = Long.parseLong(matchIdString);
         final Match match = this.matchService.getMatch(matchId);
         model.addAttribute("match", match);
+        model.addAttribute("globalRevision", GlobalRevisionCounter.getRevision());
         return "matchView";
     }
 

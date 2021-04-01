@@ -49,5 +49,10 @@
 
 <div th:replace="fragments/footer.html :: footer"></div>
 
+<script th:inline="javascript">
+    let initialGlobalRevision = [[${globalRevision}]];
+    startAutoUpdate(initialGlobalRevision);
+</script>
+
 </body>
 </html>

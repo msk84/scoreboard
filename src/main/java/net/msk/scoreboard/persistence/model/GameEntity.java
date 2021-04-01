@@ -2,6 +2,7 @@ package net.msk.scoreboard.persistence.model;
 
 import net.msk.scoreboard.model.GameStatus;
 import net.msk.scoreboard.model.Party;
+import net.msk.scoreboard.service.GlobalRevisionCounter;
 
 import javax.persistence.*;
 
@@ -29,6 +30,9 @@ public class GameEntity {
 
     @Column
     private Integer scoreGuest;
+
+    @Column(nullable = false)
+    private long revision;
 
     public GameEntity() {
         this.scoreHome = 0;
@@ -127,5 +131,12 @@ public class GameEntity {
         } else {
             this.status = GameStatus.RUNNING;
         }
+
+        this.incrementRevision();
+    }
+
+    private void incrementRevision() {
+        this.revision++;
+        GlobalRevisionCounter.increment();
     }
 }

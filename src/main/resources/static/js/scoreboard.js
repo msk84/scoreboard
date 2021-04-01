@@ -41,3 +41,28 @@ function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
         console.log("updateGameScore::Tried to set invalid game score. - MatchId: " + matchId + ", GameId: " + gameId + ", ScoreHome: " + currentScoreHome + ", ScoreGuest: " + currentScoreGuest + ", isPartyA: " + isPartyHome + ", isAdd: " + isAdd);
     }
 }
+
+let globalClientRevision = 0;
+function checkForGlobalUpdate() {
+    $.get("/api/tool/getServerRevision", function(data, status) {
+        if(status === "success") {
+            let globalServerRevision = data * 1;
+            if(globalServerRevision > globalClientRevision) {
+                console.log("checkForGlobalUpdate::New version. Let's reload.");
+                location.reload();
+            }
+            else {
+                console.log("Nothing to update. :: GlobalClientRevision: " + globalClientRevision);
+            }
+        }
+        else {
+            console.log("Update check failed.");
+        }
+    });
+}
+
+function startAutoUpdate(revision) {
+    globalClientRevision = revision;
+    setInterval(checkForGlobalUpdate, 10000);
+    console.log("AutoUpdate started.");
+}

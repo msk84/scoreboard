@@ -50,4 +50,9 @@ public class MatchController {
     public Match decrementGameScore(@PathVariable final Long matchId, @PathVariable final Long gameId, @PathVariable final Party party) {
         return this.matchService.decrementGameScore(matchId, gameId, party);
     }
+
+    @GetMapping("/{matchId}/hasUpdate")
+    public Boolean matchHasUpdate(@PathVariable final Long matchId, @RequestParam("clientRevision") Long clientRevision) {
+        return this.matchService.matchHasUpdate(matchId, clientRevision);
+    }
 }

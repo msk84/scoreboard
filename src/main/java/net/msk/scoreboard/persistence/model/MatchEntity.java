@@ -2,6 +2,7 @@ package net.msk.scoreboard.persistence.model;
 
 import net.msk.scoreboard.model.GameStatus;
 import net.msk.scoreboard.model.Party;
+import net.msk.scoreboard.service.GlobalRevisionCounter;
 import net.msk.scoreboard.web.exception.GameNotFoundException;
 
 import javax.persistence.*;
@@ -25,6 +26,9 @@ public class MatchEntity {
 
     @Column(nullable = false)
     private Integer scoreGuest;
+
+    @Column(nullable = false)
+    private long revision;
 
     @OneToMany(cascade = CascadeType.ALL)
     @OrderBy("index asc")
@@ -73,6 +77,10 @@ public class MatchEntity {
         this.scoreGuest = scoreGuest;
     }
 
+    public long getRevision() {
+        return revision;
+    }
+
     public List<GameEntity> getGames() {
         return games;
     }
@@ -107,5 +115,12 @@ public class MatchEntity {
         this.scoreGuest = (int) this.games.stream()
                 .filter(game -> GameStatus.FINISHED == game.getStatus() && game.getScoreGuest() > 2)
                 .count();
+
+        this.incrementRevision();
+    }
+
+    private void incrementRevision() {
+        this.revision++;
+        GlobalRevisionCounter.increment();
     }
 }

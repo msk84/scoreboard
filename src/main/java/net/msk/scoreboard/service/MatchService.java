@@ -54,6 +54,8 @@ public class MatchService {
         }
 
         final MatchEntity dbMatch = this.matchRepository.save(matchEntity);
+        GlobalRevisionCounter.increment();
+
         return MatchMapper.INSTANCE.matchEntityToMatch(dbMatch);
     }
 
@@ -75,4 +77,14 @@ public class MatchService {
         return MatchMapper.INSTANCE.matchEntityToMatch(matchEntity);
     }
 
+    public Boolean matchHasUpdate(final Long matchId, final Long clientRevision) {
+        final MatchEntity matchEntity = this.matchRepository.findById(matchId)
+                .orElseThrow(MatchNotFoundException::new);
+
+        if (clientRevision < matchEntity.getRevision()) {
+            return Boolean.TRUE;
+        }
+
+        return Boolean.FALSE;
+    }
 }

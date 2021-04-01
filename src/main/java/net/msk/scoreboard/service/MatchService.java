@@ -1,8 +1,6 @@
 package net.msk.scoreboard.service;
 
 import net.msk.scoreboard.mapper.MatchMapper;
-import net.msk.scoreboard.model.Game;
-import net.msk.scoreboard.model.GameScoreUpdate;
 import net.msk.scoreboard.model.Match;
 import net.msk.scoreboard.model.Party;
 import net.msk.scoreboard.persistence.model.GameEntity;

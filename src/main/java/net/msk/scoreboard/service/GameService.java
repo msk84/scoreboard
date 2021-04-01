@@ -2,8 +2,6 @@ package net.msk.scoreboard.service;
 
 import net.msk.scoreboard.mapper.GameMapper;
 import net.msk.scoreboard.model.Game;
-import net.msk.scoreboard.model.GameScoreUpdate;
-import net.msk.scoreboard.model.GameStatus;
 import net.msk.scoreboard.persistence.model.GameEntity;
 import net.msk.scoreboard.persistence.repo.GameRepository;
 import net.msk.scoreboard.web.exception.GameNotFoundException;

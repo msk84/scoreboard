@@ -1,6 +1,6 @@
 package net.msk.scoreboard.persistence.model;
 
-import net.msk.scoreboard.model.GameStatus;
+import net.msk.scoreboard.model.Status;
 import net.msk.scoreboard.model.Party;
 import net.msk.scoreboard.service.GlobalRevisionCounter;
 import net.msk.scoreboard.web.exception.GameNotFoundException;
@@ -14,6 +14,9 @@ public class MatchEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column(nullable = false)
+    private Status status;
 
     @Column(nullable = false)
     private String partyHome;
@@ -43,6 +46,10 @@ public class MatchEntity {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     public String getPartyHome() {
@@ -87,6 +94,7 @@ public class MatchEntity {
 
     public void setGames(List<GameEntity> games) {
         this.games = games;
+        this.updateMatchStatus();
     }
 
     public void incrementGameScore(final Long gameId, final Party party) {
@@ -109,14 +117,25 @@ public class MatchEntity {
 
     private void updateMatchScore() {
         this.scoreHome = (int) this.games.stream()
-                .filter(game -> GameStatus.FINISHED == game.getStatus() && game.getScoreHome() > 2)
+                .filter(game -> Status.FINISHED == game.getStatus() && game.getScoreHome() > 2)
                 .count();
 
         this.scoreGuest = (int) this.games.stream()
-                .filter(game -> GameStatus.FINISHED == game.getStatus() && game.getScoreGuest() > 2)
+                .filter(game -> Status.FINISHED == game.getStatus() && game.getScoreGuest() > 2)
                 .count();
 
         this.incrementRevision();
+        this.updateMatchStatus();
+    }
+
+    private void updateMatchStatus() {
+        if (this.games.stream().anyMatch(game -> Status.RUNNING == game.getStatus())) {
+            this.status = Status.RUNNING;
+        } else if (this.games.stream().allMatch(game -> Status.FINISHED == game.getStatus())) {
+            this.status = Status.FINISHED;
+        } else {
+            this.status = Status.PLANNED;
+        }
     }
 
     private void incrementRevision() {

@@ -4,7 +4,7 @@ public class Game {
 
     private long id;
 
-    private GameStatus status;
+    private Status status;
     private Integer index;
 
     private String partyHome;
@@ -14,7 +14,7 @@ public class Game {
     private Integer scoreGuest;
 
     public Game() {
-        this.status = GameStatus.PLANNED;
+        this.status = Status.PLANNED;
         this.scoreHome = 0;
         this.scoreGuest = 0;
     }
@@ -32,11 +32,11 @@ public class Game {
         this.id = id;
     }
 
-    public GameStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(GameStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

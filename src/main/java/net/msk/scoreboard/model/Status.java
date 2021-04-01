@@ -1,6 +1,6 @@
 package net.msk.scoreboard.model;
 
-public enum GameStatus {
+public enum Status {
 
     PLANNED,
     RUNNING,

@@ -1,6 +1,6 @@
 package net.msk.scoreboard.persistence.model;
 
-import net.msk.scoreboard.model.GameStatus;
+import net.msk.scoreboard.model.Status;
 import net.msk.scoreboard.model.Party;
 import net.msk.scoreboard.service.GlobalRevisionCounter;
 
@@ -14,7 +14,7 @@ public class GameEntity {
     private long id;
 
     @Column(nullable = false)
-    private GameStatus status;
+    private Status status;
 
     @Column
     private Integer index;
@@ -47,11 +47,11 @@ public class GameEntity {
         this.id = id;
     }
 
-    public GameStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(GameStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -96,7 +96,7 @@ public class GameEntity {
     }
 
     public void incrementScore(final Party party) {
-        if (this.status != GameStatus.FINISHED) {
+        if (this.status != Status.FINISHED) {
             if (Party.Home == party) {
                 if (this.scoreHome < 3) {
                     this.scoreHome++;
@@ -125,11 +125,11 @@ public class GameEntity {
 
     private void updateGameStatus() {
         if (this.scoreHome < 1 && this.scoreGuest < 1) {
-            this.status = GameStatus.PLANNED;
+            this.status = Status.PLANNED;
         } else if (this.scoreHome > 2 || scoreGuest > 2) {
-            this.status = GameStatus.FINISHED;
+            this.status = Status.FINISHED;
         } else {
-            this.status = GameStatus.RUNNING;
+            this.status = Status.RUNNING;
         }
 
         this.incrementRevision();

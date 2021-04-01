@@ -6,7 +6,7 @@ public class Match {
 
     private long id;
 
-    private GameStatus status;
+    private Status status;
 
     private String partyHome;
     private String partyGuest;
@@ -17,7 +17,7 @@ public class Match {
     private List<Game> games;
 
     public Match() {
-        this.status = GameStatus.PLANNED;
+        this.status = Status.PLANNED;
         this.scoreHome = 0;
         this.scoreGuest = 0;
     }
@@ -30,11 +30,11 @@ public class Match {
         this.id = id;
     }
 
-    public GameStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(GameStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

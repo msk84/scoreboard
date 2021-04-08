@@ -4,10 +4,11 @@ import net.msk.scoreboard.model.Game;
 import net.msk.scoreboard.model.Match;
 import net.msk.scoreboard.service.GlobalRevisionCounter;
 import net.msk.scoreboard.service.MatchService;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.msk.scoreboard.web.exception.MatchNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -20,8 +21,11 @@ public class TemplateController {
     @Value("${spring.application.name}")
     String appName;
 
-    @Autowired
-    private MatchService matchService;
+    private final MatchService matchService;
+
+    public TemplateController(MatchService matchService) {
+        this.matchService = matchService;
+    }
 
     @GetMapping("/")
     public String homePage(final Model model) {
@@ -68,5 +72,11 @@ public class TemplateController {
         model.addAttribute("action", "edit");
         model.addAttribute("match", match);
         return "matchEdit";
+    }
+
+    @ExceptionHandler(MatchNotFoundException.class)
+    public String handleException(final Model model, final MatchNotFoundException ex) {
+        model.addAttribute("scoreboardError", ex.getErrorMessage());
+        return "scoreboardError";
     }
 }

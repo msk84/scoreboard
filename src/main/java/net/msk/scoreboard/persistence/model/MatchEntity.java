@@ -6,6 +6,7 @@ import net.msk.scoreboard.service.GlobalRevisionCounter;
 import net.msk.scoreboard.web.exception.GameNotFoundException;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Entity
@@ -33,11 +34,15 @@ public class MatchEntity {
     @Column(nullable = false)
     private long revision;
 
+    @Column(nullable = false)
+    private OffsetDateTime modified;
+
     @OneToMany(cascade = CascadeType.ALL)
     @OrderBy("index asc")
     private List<GameEntity> games;
 
     public MatchEntity() {
+        this.modified = OffsetDateTime.now();
     }
 
     public long getId() {
@@ -136,6 +141,7 @@ public class MatchEntity {
         } else {
             this.status = Status.PLANNED;
         }
+        this.modified = OffsetDateTime.now();
     }
 
     private void incrementRevision() {

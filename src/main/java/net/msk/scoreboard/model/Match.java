@@ -77,4 +77,17 @@ public class Match {
     public void setGames(List<Game> games) {
         this.games = games;
     }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "id=" + id +
+                ", status=" + status +
+                ", partyHome='" + partyHome + '\'' +
+                ", partyGuest='" + partyGuest + '\'' +
+                ", scoreHome=" + scoreHome +
+                ", scoreGuest=" + scoreGuest +
+                ", games=" + games +
+                '}';
+    }
 }

@@ -9,7 +9,6 @@ import net.msk.scoreboard.persistence.repo.MatchRepository;
 import net.msk.scoreboard.web.exception.MatchNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +22,11 @@ public class MatchService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchService.class);
 
-    @Autowired
-    private MatchRepository matchRepository;
+    private final MatchRepository matchRepository;
+
+    public MatchService(MatchRepository matchRepository) {
+        this.matchRepository = matchRepository;
+    }
 
     public List<Match> getMatchOverview() {
         final Iterable<MatchEntity> dbMatches = this.matchRepository.findByModifiedGreaterThan(OffsetDateTime.now().minusHours(3));
@@ -43,7 +45,8 @@ public class MatchService {
     }
 
     @Transactional
-    public Match saveMatch(final Match match) {
+    public void saveMatch(final Match match) {
+        LOGGER.info("Saving match. :: Match: {}", match);
         final MatchEntity matchEntity = MatchMapper.INSTANCE.matchToMatchEntity(match);
 
         Integer i = 0;
@@ -55,11 +58,12 @@ public class MatchService {
         final MatchEntity dbMatch = this.matchRepository.save(matchEntity);
         GlobalRevisionCounter.increment();
 
-        return MatchMapper.INSTANCE.matchEntityToMatch(dbMatch);
+        MatchMapper.INSTANCE.matchEntityToMatch(dbMatch);
     }
 
     @Transactional
     public Match incrementGameScore(final Long matchId, final Long gameId, final Party party) {
+        LOGGER.info("Incrementing game score. :: Match: {}, Game: {}, Party: {}", matchId, gameId, party);
         final MatchEntity matchEntity = this.matchRepository.findById(matchId)
                 .orElseThrow(() -> new MatchNotFoundException(matchId));
         matchEntity.incrementGameScore(gameId, party);
@@ -69,6 +73,7 @@ public class MatchService {
 
     @Transactional
     public Match decrementGameScore(final Long matchId, final Long gameId, final Party party) {
+        LOGGER.info("Decrementing game score. :: Match: {}, Game: {}, Party: {}", matchId, gameId, party);
         final MatchEntity matchEntity = this.matchRepository.findById(matchId)
                 .orElseThrow(() -> new MatchNotFoundException(matchId));
         matchEntity.decrementGameScore(gameId, party);

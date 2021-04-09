@@ -79,5 +79,17 @@ public class Game {
     public void setScoreGuest(Integer scoreGuest) {
         this.scoreGuest = scoreGuest;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", status=" + status +
+                ", index=" + index +
+                ", partyHome='" + partyHome + '\'' +
+                ", partyGuest='" + partyGuest + '\'' +
+                ", scoreHome=" + scoreHome +
+                ", scoreGuest=" + scoreGuest +
+                '}';
+    }
 }

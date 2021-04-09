@@ -1,6 +1,6 @@
-/* Scoreboard JavaScript */
-function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
+/* Scoreboard JavaScript - Edit match */
 
+function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
     let currentScoreHome = $("#game_" + gameId + "_scoreHome").text() * 1;
     let currentScoreGuest = $("#game_" + gameId + "_scoreGuest").text() * 1;
 
@@ -42,27 +42,17 @@ function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
     }
 }
 
-let globalClientRevision = 0;
-function checkForGlobalUpdate() {
-    $.get("/api/tool/getServerRevision", function(data, status) {
-        if(status === "success") {
-            let globalServerRevision = data * 1;
-            if(globalServerRevision > globalClientRevision) {
-                console.log("checkForGlobalUpdate::New version. Let's reload.");
-                location.reload();
-            }
-            else {
-                console.log("Nothing to update. :: GlobalClientRevision: " + globalClientRevision);
-            }
-        }
-        else {
-            console.log("Update check failed.");
+function deleteMatch(matchId) {
+    console.log("Deleting Match. :: MatchId: " + matchId);
+    $.ajax({
+        type: "DELETE",
+        url: "/api/match/delete/" + matchId,
+        success: function (value) {
+            console.log("Match successfully deleted.");
+            location.replace("/match/overview");
+        },
+        error: function (errMsg) {
+            console.log("Failed to delete match. :: Error: " + errMsg);
         }
     });
-}
-
-function startAutoUpdate(revision) {
-    globalClientRevision = revision;
-    setInterval(checkForGlobalUpdate, 10000);
-    console.log("AutoUpdate started.");
 }

@@ -39,6 +39,11 @@ public class MatchController {
         return new ModelAndView("redirect:/match/overview");
     }
 
+    @DeleteMapping("/delete/{id}")
+    public Boolean delete(@PathVariable Long id) {
+        return this.matchService.deleteMatch(id);
+    }
+
     @PostMapping("/{matchId}/game/{gameId}/incrementScore/{party}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Match incrementGameScore(@PathVariable final Long matchId, @PathVariable final Long gameId, @PathVariable final Party party) {

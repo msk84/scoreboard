@@ -91,4 +91,10 @@ public class MatchService {
 
         return Boolean.FALSE;
     }
+
+    public Boolean deleteMatch(final Long matchId) {
+        LOGGER.info("Delete match. :: MatchId: {}", matchId);
+        this.matchRepository.deleteById(matchId);
+        return !this.matchRepository.existsById(matchId);
+    }
 }

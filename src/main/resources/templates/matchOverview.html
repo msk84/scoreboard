@@ -49,6 +49,8 @@
 
 <div th:replace="fragments/footer.html :: footer"></div>
 
+<script src="/js/clientUpdate.js" th:href="@{/js/clientUpdate.js}"></script>
+
 <script th:inline="javascript">
     let initialGlobalRevision = [[${globalRevision}]];
     startAutoUpdate(initialGlobalRevision);

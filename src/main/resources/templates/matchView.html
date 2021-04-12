@@ -33,13 +33,13 @@
                                     </td>
                                 </tr>
                                 <tr th:each="game : ${match.games}">
-                                    <td style="width: 12%; white-space: nowrap;"><a href="#"><img src="/images/minus-outline.svg" class="iconLink" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, false)|" /></a>&nbsp;<a href="#"><img src="/images/add-outline.svg" class="iconLink" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, true)|" /></a></td>
+                                    <td style="width: 12%; white-space: nowrap;"><a href="#"><i class="bi-dash-circle" style="font-size: 3em;" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, false)|"></i></a>&nbsp;<a href="#"><i class="bi-plus-circle" style="font-size: 3em;" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, true)|"></i></a></td>
                                     <td th:text="${game.partyHome}" class="matchViewParty" style="width: 30%; text-align: right;"></td>
                                     <td class="matchViewScore" style="width: 16%">
                                         <span th:id="game_ + ${game.id} + _scoreHome" th:text="${game.getScoreHome()}"></span> : <span th:id="game_ + ${game.id} + _scoreGuest" th:text="${game.getScoreGuest()}"></span>
                                     </td>
                                     <td th:text="${game.partyGuest}" class="matchViewParty" style="width: 30%; text-align: left;"></td>
-                                    <td style="width: 12%; white-space: nowrap; text-align: right;"><a href="#"><img src="/images/minus-outline.svg" class="iconLink" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, false)|" /></a>&nbsp;<a href="#"><img src="/images/add-outline.svg" class="iconLink" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, true)|" /></a></td>
+                                    <td style="width: 12%; white-space: nowrap; text-align: right;"><a href="#"><i class="bi-dash-circle" style="font-size: 3em;" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, false)|"></i></a>&nbsp;<a href="#"><i class="bi-plus-circle" style="font-size: 3em;" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, true)|"></i></a></td>
                                 </tr>
                             </table>
                         </td>

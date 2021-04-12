@@ -27,7 +27,7 @@
                                         <th class="matchViewTitle" style="text-align: left"><span th:text="${match.partyGuest}" /></th>
                                     </tr>
                                     <tr>
-                                        <td colspan="3" style="text-align: center"><a th:href="@{/match/{id}/view(id=${match.id})}"><img src="/images/arrow-outline-right.svg" class="iconLink" /></a></td>
+                                        <td colspan="3" style="text-align: center"><a th:href="@{/match/{id}/view(id=${match.id})}"><i class="bi-disc" style="font-size: 3em;"></i></a></td>
                                     </tr>
                                     <tr th:each="game : ${match.games}">
                                         <td th:text="${game.partyHome}" class="matchViewParty" style="width: 42%; text-align: right"></td>

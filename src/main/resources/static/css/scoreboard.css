@@ -30,26 +30,6 @@ body {
     font-weight: bold;
 }
 
-.hiddenButtons a {
-    visibility: hidden;
-}
-
-.hiddenButtons:hover a {
-    visibility: visible;
-}
-
-.flexBlockParent > h3 {
-    margin-top: 20px;
-}
-
-.flexBlockChild {
-    display: inline-block;
-}
-.flexBlockChild > span {
-    display: inline-block;
-    padding: 5px;
-    width: 80px;
-}
 .hidden {
     display: none;
 }

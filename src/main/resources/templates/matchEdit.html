@@ -11,22 +11,31 @@
                   th:action="${action} == 'add' ? @{/api/match/add} : @{/api/match/edit/{id}(id=${match.id})}"
                   th:object="${match}" method="post">
 
-                <div class="flexBlockParent">
-                    <h3>Match</h3>
-                    <div class="flexBlockChild"><span>Home</span><input type="text" th:field="*{partyHome}" th:required="required"></div>
-                    <div class="flexBlockChild"><span>Guest</span><input type="text" th:field="*{partyGuest}" th:required="required"></div>
+                <div class="row">
+                    <h3 class="mt-3">Match</h3>
+                    <div class="col-md">
+                        <input class="form-control" th:field="*{partyHome}" th:required="required" placeholder="Home" aria-label="Home" />
+                    </div>
+                    <div class="col-md">
+                        <input class="form-control" th:field="*{partyGuest}" th:required="required" placeholder="Guest" aria-label="Guest" />
+                    </div>
                 </div>
 
-                <div th:each="game, gameIndex : ${match.games}" class="flexBlockParent">
-                    <h3 th:text="'Game ' + ${gameIndex.index + 1}"></h3>
-                    <div class="flexBlockChild"><span>Home</span><input type="text" th:field="*{games[__${gameIndex.index}__].partyHome}"/></div>
-                    <div class="flexBlockChild"><span>Guest</span><input type="text" th:field="*{games[__${gameIndex.index}__].partyGuest}"/></div>
+                <div th:each="game, gameIndex : ${match.games}" class="row">
+                    <h3 th:text="'Game ' + ${gameIndex.index + 1}" class="mt-3"></h3>
+                    <div class="col-md">
+                        <input class="form-control" th:field="*{games[__${gameIndex.index}__].partyHome}" placeholder="Player home" aria-label="Player home" />
+                    </div>
+                    <div class="col-md">
+                        <input class="form-control" th:field="*{games[__${gameIndex.index}__].partyGuest}" placeholder="Player guest" aria-label="Player guest" />
+                    </div>
                     <div class="hidden">
                         <input type="hidden" th:field="*{games[__${gameIndex.index}__].id}"/>
                         <input type="hidden" th:field="*{games[__${gameIndex.index}__].index}"/>
                     </div>
                 </div>
-                <input class="btn btn-primary" type="submit" value="Save" />
+
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
             </form>
         </div>
     </div>

@@ -70,6 +70,10 @@ public class Match {
         this.scoreGuest = scoreGuest;
     }
 
+    public String getScoreDisplayString() {
+        return this.scoreHome + " : " + this.scoreGuest;
+    }
+
     public List<Game> getGames() {
         return games;
     }

@@ -80,6 +80,10 @@ public class Game {
         this.scoreGuest = scoreGuest;
     }
 
+    public String getScoreDisplayString() {
+        return this.scoreHome + " : " + this.scoreGuest;
+    }
+
     @Override
     public String toString() {
         return "Game{" +

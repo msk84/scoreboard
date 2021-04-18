@@ -16,42 +16,50 @@
 
             <div th:if="${match != null}">
                 <h2>Match</h2>
-                <table class="matchView" style="width: 100%">
-                    <tr>
-                        <td>
-                            <table style="width: 100%;">
-                                <tr>
-                                    <th class="matchViewTitle" colspan="2" style="text-align: right"><span th:text="${match.partyHome}" /></th>
-                                    <th class="matchViewTitle" style="text-align: center"><span th:id="match_ + ${match.id} + _scoreHome" th:text="${match.scoreHome}" /> : <span th:id="match_ + ${match.id} + _scoreGuest" th:text="${match.scoreGuest}" /></th>
-                                    <th class="matchViewTitle" colspan="2" style="text-align: left"><span th:text="${match.partyGuest}" /></th>
-                                </tr>
-                                <tr>
-                                    <td colspan="5" style="text-align: center;">
-                                        <span th:text="${match.getStatus()}"></span> -
-                                        <a th:href="@{/match/{id}/edit(id=${match.id})}" class="btn btn-secondary" role="button">Edit</a>
-                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ConfirmationDeleteMatch">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr th:each="game : ${match.games}">
-                                    <td style="width: 12%; white-space: nowrap;"><a href="#"><i class="bi-dash-circle" style="font-size: 3em;" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, false)|"></i></a>&nbsp;<a href="#"><i class="bi-plus-circle" style="font-size: 3em;" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, true)|"></i></a></td>
-                                    <td th:text="${game.partyHome}" class="matchViewParty" style="width: 30%; text-align: right;"></td>
-                                    <td class="matchViewScore" style="width: 16%">
-                                        <span th:id="game_ + ${game.id} + _scoreHome" th:text="${game.getScoreHome()}"></span> : <span th:id="game_ + ${game.id} + _scoreGuest" th:text="${game.getScoreGuest()}"></span>
-                                    </td>
-                                    <td th:text="${game.partyGuest}" class="matchViewParty" style="width: 30%; text-align: left;"></td>
-                                    <td style="width: 12%; white-space: nowrap; text-align: right;"><a href="#"><i class="bi-dash-circle" style="font-size: 3em;" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, false)|"></i></a>&nbsp;<a href="#"><i class="bi-plus-circle" style="font-size: 3em;" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, true)|"></i></a></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+                <div class="container border rounded">
+                    <div class="row row-cols-3">
+                        <div class="col-xs text-end">
+                            <span class="fs-3" th:text="${match.partyHome}"></span>
+                        </div>
+                        <div class="col-xs text-center">
+                            <span class="fs-3" th:id="match_ + ${match.id} + _scoreHome" th:text="${match.scoreHome}"></span><span class="fs-3"> : </span><span class="fs-3" th:id="match_ + ${match.id} + _scoreGuest" th:text="${match.scoreGuest}"></span>
+                        </div>
+                        <div class="col-xs">
+                            <span class="fs-3" th:text="${match.partyGuest}"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs text-center">
+                            <span th:text="${match.getStatus()}"></span> -
+                            <a th:href="@{/match/{id}/edit(id=${match.id})}" class="btn btn-secondary" role="button">Edit</a>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ConfirmationDeleteMatch">Delete</button>
+                        </div>
+                    </div>
+                    <div class="row row-cols-5" th:each="game : ${match.games}">
+                        <div class="col-xs text-start">
+                            <a href="#"><i class="bi-dash-circle fs-3" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, false)|"></i></a>&nbsp;<a href="#"><i class="bi-plus-circle fs-3" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, true)|"></i></a>
+                        </div>
+                        <div class="col-xs text-end">
+                            <h1 th:text="${game.partyHome}"></h1>
+                        </div>
+                        <div class="col-xs text-center">
+                            <span class="fs-1" th:id="game_ + ${game.id} + _scoreHome" th:text="${game.getScoreHome()}"></span><span class="fs-1"> : </span><span class="fs-1" th:id="game_ + ${game.id} + _scoreGuest" th:text="${game.getScoreGuest()}"></span>
+                        </div>
+                        <div class="col-xs">
+                            <h1 th:text="${game.partyGuest}"></h1>
+                        </div>
+                        <div class="col-xs text-end">
+                            <a href="#"><i class="bi-dash-circle fs-3" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, false)|"></i></a>&nbsp;<a href="#"><i class="bi-plus-circle fs-3" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, true)|"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 
     <!-- Modal dialog -->
-    <div class="modal fade" id="ConfirmationDeleteMatch" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ConfirmationDeleteMatch" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -63,7 +71,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" th:onclick="|deleteMatch(${match.id})|">Yes</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                            th:onclick="|deleteMatch(${match.id})|">Yes
+                    </button>
                 </div>
             </div>
         </div>

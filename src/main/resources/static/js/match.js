@@ -1,4 +1,4 @@
-/* Scoreboard JavaScript - Edit match */
+/* Scoreboard JavaScript - Match set score */
 
 function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
     let currentScoreHome = $("#game_" + gameId + "_scoreHome").text() * 1;

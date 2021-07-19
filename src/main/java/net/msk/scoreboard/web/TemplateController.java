@@ -55,8 +55,8 @@ public class TemplateController {
         final Match match = new Match();
         //match.setGames(Stream.generate(Game::new).limit(2).collect(Collectors.toList()));
 
-        final List<Game> gamesList = new ArrayList<>(2);
-        for (int i = 0; i < 2; i++) {
+        final List<Game> gamesList = new ArrayList<>(10);
+        for (int i = 0; i < 10; i++) {
             gamesList.add(new Game(i));
         }
         match.setGames(gamesList);

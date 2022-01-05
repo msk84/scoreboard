@@ -1,7 +1,10 @@
 /* Scoreboard JavaScript - Match set score */
 function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
-    let currentScoreHome = $("#game_" + gameId + "_scoreHome").text() * 1;
-    let currentScoreGuest = $("#game_" + gameId + "_scoreGuest").text() * 1;
+    let currentScoreHome = $("#game_" + gameId + "_scoreHome").text();
+    let currentScoreGuest = $("#game_" + gameId + "_scoreGuest").text();
+
+    currentScoreHome = isNaN(currentScoreHome) ? 0 : currentScoreHome * 1;
+    currentScoreGuest = isNaN(currentScoreGuest) ? 0 : currentScoreGuest * 1;
 
     if(isAdd) {
         isPartyHome ? currentScoreHome++ : currentScoreGuest++;
@@ -18,6 +21,7 @@ function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (match) {
+                // update match score
                 $("#match_" + matchId + "_scoreHome").text(match.scoreHome);
                 $("#match_" + matchId + "_scoreGuest").text(match.scoreGuest);
                 $("#match_" + matchId + "_status").text(match.status);
@@ -29,14 +33,19 @@ function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
                     $("#match_" + matchId + "_score").removeClass("inProgress");
                 }
 
+                // update game score
                 let gameToUpdate = match.games.filter(function(game){
                     return game.id == gameId;
                 })[0];
 
-                if (isPartyHome) {
-                    $("#game_" + gameId + "_scoreHome").text(gameToUpdate.scoreHome);
-                } else {
-                    $("#game_" + gameId + "_scoreGuest").text(gameToUpdate.scoreGuest);
+                $("#game_" + gameId + "_scoreHome").text(gameToUpdate.scoreHome);
+                $("#game_" + gameId + "_scoreGuest").text(gameToUpdate.scoreGuest);
+
+                if(gameToUpdate.status == "RUNNING") {
+                    $("#game_" + gameId + "_score").addClass("inProgress");
+                }
+                else {
+                    $("#game_" + gameId + "_score").removeClass("inProgress");
                 }
             },
             error: function (errMsg) {

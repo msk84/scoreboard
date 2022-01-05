@@ -23,7 +23,7 @@
                                 <span class="fs-3" th:text="${#strings.defaultString(match.partyHome,'-')}"></span>
                             </div>
                             <div th:id="match_ + ${match.id} + _score" class="col-xs text-center" th:classappend="${#strings.equals(match.status, 'RUNNING')} ? 'inProgress' : ''">
-                                <span class="fs-3" th:text="${match.scoreDisplayString}"></span>
+                                <span class="fs-3" th:text="${!#strings.equals(match.status, 'PLANNED')} ? ${match.getScoreHome()} : '-'"></span><span class="fs-3"> : </span><span class="fs-3" th:text="${!#strings.equals(match.status, 'PLANNED')} ? ${match.getScoreGuest()} : '-'"></span>
                             </div>
                             <div class="col-xs">
                                 <span class="fs-3" th:text="${#strings.defaultString(match.partyGuest,'-')}"></span>
@@ -36,13 +36,13 @@
                         </div>
                         <div class="row row-cols-3" th:each="game : ${match.games}">
                             <div class="col-xs text-end">
-                                <h1 th:text="${#strings.defaultString(game.partyHome,'-')}"></h1>
+                                <span class="fs-3" th:text="${#strings.defaultString(game.partyHome,'-')}"></span>
                             </div>
-                            <div class="col-xs text-center">
-                                <h1 th:text="${game.scoreDisplayString}"></h1>
+                            <div th:id="game_ + ${game.id} + _score" th:classappend="${#strings.equals(game.status, 'RUNNING')} ? 'inProgress' : ''" class="col-xs text-center">
+                                <span class="fs-3" th:text="${!#strings.equals(game.status, 'PLANNED')} ? ${game.getScoreHome()} : '-'"></span><span class="fs-3"> : </span><span class="fs-3" th:text="${!#strings.equals(game.status, 'PLANNED')} ? ${game.getScoreGuest()} : '-'"></span>
                             </div>
                             <div class="col-xs">
-                                <h1 th:text="${#strings.defaultString(game.partyGuest,'-')}"></h1>
+                                <span class="fs-3" th:text="${#strings.defaultString(game.partyGuest,'-')}"></span>
                             </div>
                         </div>
                     </div>

@@ -6,11 +6,11 @@ function checkForGlobalUpdate() {
         if(status === "success") {
             let globalServerRevision = data * 1;
             if(globalServerRevision > globalClientRevision) {
-                console.log("checkForGlobalUpdate::New version. Let's reload.");
+                console.trace("checkForGlobalUpdate::New version. Let's reload.");
                 location.reload();
             }
             else {
-                console.log("Nothing to update. :: GlobalClientRevision: " + globalClientRevision);
+                console.trace("Nothing to update. :: GlobalClientRevision: " + globalClientRevision);
             }
         }
         else {

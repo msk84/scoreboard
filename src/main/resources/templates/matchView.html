@@ -19,18 +19,18 @@
                 <div class="container border rounded">
                     <div class="row row-cols-3">
                         <div class="col-xs text-end">
-                            <span class="fs-3" th:text="${match.partyHome}"></span>
+                            <span class="fs-3" th:text="${#strings.defaultString(match.partyHome,'-')}"></span>
                         </div>
-                        <div class="col-xs text-center">
+                        <div th:id="match_ + ${match.id} + _score" class="col-xs text-center" th:classappend="${#strings.equals(match.status, 'RUNNING')} ? 'inProgress' : ''">
                             <span class="fs-3" th:id="match_ + ${match.id} + _scoreHome" th:text="${match.scoreHome}"></span><span class="fs-3"> : </span><span class="fs-3" th:id="match_ + ${match.id} + _scoreGuest" th:text="${match.scoreGuest}"></span>
                         </div>
                         <div class="col-xs">
-                            <span class="fs-3" th:text="${match.partyGuest}"></span>
+                            <span class="fs-3" th:text="${#strings.defaultString(match.partyGuest,'-')}"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs text-center">
-                            <span th:text="${match.getStatus()}"></span> -
+                            <span th:id="match_ + ${match.id} + _status" th:text="${match.getStatus()}"></span> -
                             <a th:href="@{/match/{id}/edit(id=${match.id})}" class="btn btn-secondary" role="button">Edit</a>
                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ConfirmationDeleteMatch">Delete</button>
                         </div>
@@ -40,13 +40,13 @@
                             <a href="#"><i class="bi-dash-circle fs-3" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, false)|"></i></a>&nbsp;<a href="#"><i class="bi-plus-circle fs-3" th:onclick="|updateGameScore('${match.id}', '${game.id}', true, true)|"></i></a>
                         </div>
                         <div class="col-xs text-end">
-                            <h1 th:text="${game.partyHome}"></h1>
+                            <h1 th:text="${#strings.defaultString(game.partyHome,'-')}"></h1>
                         </div>
                         <div class="col-xs text-center">
                             <span class="fs-1" th:id="game_ + ${game.id} + _scoreHome" th:text="${game.getScoreHome()}"></span><span class="fs-1"> : </span><span class="fs-1" th:id="game_ + ${game.id} + _scoreGuest" th:text="${game.getScoreGuest()}"></span>
                         </div>
                         <div class="col-xs">
-                            <h1 th:text="${game.partyGuest}"></h1>
+                            <h1 th:text="${#strings.defaultString(game.partyGuest,'-')}"></h1>
                         </div>
                         <div class="col-xs text-end">
                             <a href="#"><i class="bi-dash-circle fs-3" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, false)|"></i></a>&nbsp;<a href="#"><i class="bi-plus-circle fs-3" th:onclick="|updateGameScore('${match.id}', '${game.id}', false, true)|"></i></a>

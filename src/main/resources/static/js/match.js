@@ -1,5 +1,4 @@
 /* Scoreboard JavaScript - Match set score */
-
 function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
     let currentScoreHome = $("#game_" + gameId + "_scoreHome").text() * 1;
     let currentScoreGuest = $("#game_" + gameId + "_scoreGuest").text() * 1;
@@ -21,6 +20,14 @@ function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
             success: function (match) {
                 $("#match_" + matchId + "_scoreHome").text(match.scoreHome);
                 $("#match_" + matchId + "_scoreGuest").text(match.scoreGuest);
+                $("#match_" + matchId + "_status").text(match.status);
+
+                if(match.status == "RUNNING") {
+                    $("#match_" + matchId + "_score").addClass("inProgress");
+                }
+                else {
+                    $("#match_" + matchId + "_score").removeClass("inProgress");
+                }
 
                 let gameToUpdate = match.games.filter(function(game){
                     return game.id == gameId;

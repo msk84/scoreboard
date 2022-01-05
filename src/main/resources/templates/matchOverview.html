@@ -20,13 +20,13 @@
                     <div class="container border rounded">
                         <div class="row row-cols-3">
                             <div class="col-xs text-end">
-                                <span class="fs-3" th:text="${match.partyHome}"></span>
+                                <span class="fs-3" th:text="${#strings.defaultString(match.partyHome,'-')}"></span>
                             </div>
-                            <div class="col-xs text-center">
+                            <div th:id="match_ + ${match.id} + _score" class="col-xs text-center" th:classappend="${#strings.equals(match.status, 'RUNNING')} ? 'inProgress' : ''">
                                 <span class="fs-3" th:text="${match.scoreDisplayString}"></span>
                             </div>
                             <div class="col-xs">
-                                <span class="fs-3" th:text="${match.partyGuest}"></span>
+                                <span class="fs-3" th:text="${#strings.defaultString(match.partyGuest,'-')}"></span>
                             </div>
                         </div>
                         <div class="row">
@@ -36,13 +36,13 @@
                         </div>
                         <div class="row row-cols-3" th:each="game : ${match.games}">
                             <div class="col-xs text-end">
-                                <h1 th:text="${game.partyHome}"></h1>
+                                <h1 th:text="${#strings.defaultString(game.partyHome,'-')}"></h1>
                             </div>
                             <div class="col-xs text-center">
                                 <h1 th:text="${game.scoreDisplayString}"></h1>
                             </div>
                             <div class="col-xs">
-                                <h1 th:text="${game.partyGuest}"></h1>
+                                <h1 th:text="${#strings.defaultString(game.partyGuest,'-')}"></h1>
                             </div>
                         </div>
                     </div>

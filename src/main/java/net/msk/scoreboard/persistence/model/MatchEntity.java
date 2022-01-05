@@ -134,12 +134,14 @@ public class MatchEntity {
     }
 
     private void updateMatchStatus() {
-        if (this.games.stream().anyMatch(game -> Status.RUNNING == game.getStatus())) {
-            this.status = Status.RUNNING;
-        } else if (this.games.stream().allMatch(game -> Status.FINISHED == game.getStatus())) {
+        if (this.games.stream().allMatch(game -> Status.FINISHED == game.getStatus())) {
             this.status = Status.FINISHED;
-        } else {
+        }
+        else if(this.games.stream().allMatch(game -> Status.PLANNED == game.getStatus())){
             this.status = Status.PLANNED;
+        }
+        else {
+            this.status = Status.RUNNING;
         }
         this.modified = OffsetDateTime.now();
     }

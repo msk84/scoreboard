@@ -34,6 +34,10 @@ body {
     display: none;
 }
 
+.inProgress {
+    color: #989898;
+}
+
 /* Mobile display */
 @media (max-width: 800px) {
     .iconLink {

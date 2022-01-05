@@ -47,13 +47,15 @@ public class MatchController {
     @PostMapping("/{matchId}/game/{gameId}/incrementScore/{party}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Match incrementGameScore(@PathVariable final Long matchId, @PathVariable final Long gameId, @PathVariable final Party party) {
-        return this.matchService.incrementGameScore(matchId, gameId, party);
+        final Match result = this.matchService.incrementGameScore(matchId, gameId, party);
+        return result;
     }
 
     @PostMapping("/{matchId}/game/{gameId}/decrementScore/{party}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Match decrementGameScore(@PathVariable final Long matchId, @PathVariable final Long gameId, @PathVariable final Party party) {
-        return this.matchService.decrementGameScore(matchId, gameId, party);
+        final Match result =  this.matchService.decrementGameScore(matchId, gameId, party);
+        return result;
     }
 
     @GetMapping("/{matchId}/hasUpdate")

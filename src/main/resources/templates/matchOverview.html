@@ -34,15 +34,44 @@
                                 <a th:href="@{/match/{id}/view(id=${match.id})}"><i class="bi-disc" style="font-size: 3em;"></i></a>
                             </div>
                         </div>
-                        <div class="row row-cols-3" th:each="game : ${match.games}">
-                            <div class="col-xs text-end">
-                                <span class="fs-3" th:text="${#strings.defaultString(game.partyHome,'-')}"></span>
+                        <div class="row" th:each="game : ${match.games}">
+                            <div class="row row-cols-3">
+                                <div class="col-xs text-end">
+                                    <span class="fs-3" th:text="${#strings.defaultString(game.partyHome,'-')}"></span>
+                                </div>
+                                <div th:id="game_ + ${game.id} + _score" th:classappend="${#strings.equals(game.status, 'RUNNING')} ? 'inProgress' : ''" class="col-xs text-center">
+                                    <!--<span class="fs-3" th:text="${!#strings.equals(game.status, 'PLANNED')} ? ${game.getScoreHome()} : '-'"></span><span class="fs-3"> : </span><span class="fs-3" th:text="${!#strings.equals(game.status, 'PLANNED')} ? ${game.getScoreGuest()} : '-'"></span>-->
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="fs-3" th:id="game_ + ${game.id} + _scoreHome" th:text="${!#strings.equals(game.status, 'PLANNED')} ? ${game.getScoreHome()} : '-'"></span>
+                                        </div>
+                                        <div class="col">
+                                            <span class="fs-3"> : </span>
+                                        </div>
+                                        <div class="col">
+                                            <span class="fs-3" th:id="game_ + ${game.id} + _scoreGuest" th:text="${!#strings.equals(game.status, 'PLANNED')} ? ${game.getScoreGuest()} : '-'"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs">
+                                    <span class="fs-3" th:text="${#strings.defaultString(game.partyGuest,'-')}"></span>
+                                </div>
                             </div>
-                            <div th:id="game_ + ${game.id} + _score" th:classappend="${#strings.equals(game.status, 'RUNNING')} ? 'inProgress' : ''" class="col-xs text-center">
-                                <span class="fs-3" th:text="${!#strings.equals(game.status, 'PLANNED')} ? ${game.getScoreHome()} : '-'"></span><span class="fs-3"> : </span><span class="fs-3" th:text="${!#strings.equals(game.status, 'PLANNED')} ? ${game.getScoreGuest()} : '-'"></span>
-                            </div>
-                            <div class="col-xs">
-                                <span class="fs-3" th:text="${#strings.defaultString(game.partyGuest,'-')}"></span>
+                            <div class="row row-cols-2">
+                                <div class="col text-end">
+                                <span th:each="highlightHome : ${game.gameHighlightsHome}">
+                                    <span th:if="${highlightHome.type == 'OneEighty'}"><i class="bi-badge-8k fs-3"></i></span>
+                                    <span th:if="${highlightHome.type == 'HighFinish'}"><i class="bi-bullseye fs-3">[[${highlightHome.value}]]</i></span>
+                                    <span th:if="${highlightHome.type == 'ShortGame'}"><i class="bi-arrows-angle-contract fs-3">[[${highlightHome.value}]]</i></span>
+                                </span>
+                                </div>
+                                <div class="col">
+                                <span th:each="highlightGuest : ${game.gameHighlightsGuest}">
+                                    <span th:if="${highlightGuest.type == 'OneEighty'}"><i class="bi-badge-8k fs-3"></i></span>
+                                    <span th:if="${highlightGuest.type == 'HighFinish'}"><i class="bi-bullseye fs-3">[[${highlightGuest.value}]]</i></span>
+                                    <span th:if="${highlightGuest.type == 'ShortGame'}"><i class="bi-arrows-angle-contract fs-3">[[${highlightGuest.value}]]</i></span>
+                                </span>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 package net.msk.scoreboard.web;
 
+import net.msk.scoreboard.model.GameHighlight;
 import net.msk.scoreboard.model.Match;
 import net.msk.scoreboard.model.Party;
 import net.msk.scoreboard.service.MatchService;
@@ -47,15 +48,21 @@ public class MatchController {
     @PostMapping("/{matchId}/game/{gameId}/incrementScore/{party}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Match incrementGameScore(@PathVariable final Long matchId, @PathVariable final Long gameId, @PathVariable final Party party) {
-        final Match result = this.matchService.incrementGameScore(matchId, gameId, party);
-        return result;
+        return this.matchService.incrementGameScore(matchId, gameId, party);
     }
 
     @PostMapping("/{matchId}/game/{gameId}/decrementScore/{party}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Match decrementGameScore(@PathVariable final Long matchId, @PathVariable final Long gameId, @PathVariable final Party party) {
-        final Match result =  this.matchService.decrementGameScore(matchId, gameId, party);
-        return result;
+        return this.matchService.decrementGameScore(matchId, gameId, party);
+    }
+
+    @PostMapping(value = {"/{matchId}/game/{gameId}/addHighlight/{party}/{highlight}", "/{matchId}/game/{gameId}/addHighlight/{party}/{highlight}/{highlightValue}"})
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Match addGameHighlight(@PathVariable final Long matchId, @PathVariable final Long gameId, @PathVariable final Party party,
+                                    @PathVariable final String highlight, @PathVariable(required = false) final Integer highlightValue) {
+        final GameHighlight gameHighlight = new GameHighlight(GameHighlight.Type.valueOf(highlight), highlightValue);
+        return this.matchService.addGameHighlight(matchId, gameId, party, gameHighlight);
     }
 
     @GetMapping("/{matchId}/hasUpdate")

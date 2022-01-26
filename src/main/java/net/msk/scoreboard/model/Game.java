@@ -1,5 +1,7 @@
 package net.msk.scoreboard.model;
 
+import java.util.List;
+
 public class Game {
 
     private long id;
@@ -12,6 +14,9 @@ public class Game {
 
     private Integer scoreHome;
     private Integer scoreGuest;
+
+    private List<GameHighlight> gameHighlightsHome;
+    private List<GameHighlight> gameHighlightsGuest;
 
     public Game() {
         this.status = Status.PLANNED;
@@ -80,8 +85,20 @@ public class Game {
         this.scoreGuest = scoreGuest;
     }
 
-    public String getScoreDisplayString() {
-        return this.scoreHome + " : " + this.scoreGuest;
+    public List<GameHighlight> getGameHighlightsHome() {
+        return gameHighlightsHome;
+    }
+
+    public void setGameHighlightsHome(List<GameHighlight> gameHighlightsHome) {
+        this.gameHighlightsHome = gameHighlightsHome;
+    }
+
+    public List<GameHighlight> getGameHighlightsGuest() {
+        return gameHighlightsGuest;
+    }
+
+    public void setGameHighlightsGuest(List<GameHighlight> gameHighlightsGuest) {
+        this.gameHighlightsGuest = gameHighlightsGuest;
     }
 
     @Override
@@ -94,6 +111,8 @@ public class Game {
                 ", partyGuest='" + partyGuest + '\'' +
                 ", scoreHome=" + scoreHome +
                 ", scoreGuest=" + scoreGuest +
+                ", gameHighlightsHome=" + gameHighlightsHome +
+                ", gameHighlightsGuest=" + gameHighlightsGuest +
                 '}';
     }
 }

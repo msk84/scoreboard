@@ -1,5 +1,6 @@
 package net.msk.scoreboard.persistence.model;
 
+import net.msk.scoreboard.model.GameHighlight;
 import net.msk.scoreboard.model.Status;
 import net.msk.scoreboard.model.Party;
 import net.msk.scoreboard.service.GlobalRevisionCounter;
@@ -117,6 +118,15 @@ public class MatchEntity {
                 .findFirst()
                 .orElseThrow(GameNotFoundException::new);
         game.decrementScore(party);
+        this.updateMatchScore();
+    }
+
+    public void addGameHighlight(final Long gameId, final Party party, final GameHighlight gameHighlight) {
+        final GameEntity game = this.games.stream()
+                .filter(searchGame -> searchGame.getId() == gameId)
+                .findFirst()
+                .orElseThrow(GameNotFoundException::new);
+        game.addGameHighlight(party, gameHighlight);
         this.updateMatchScore();
     }
 

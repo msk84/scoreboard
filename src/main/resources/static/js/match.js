@@ -58,6 +58,24 @@ function updateGameScore(matchId, gameId, isPartyHome, isAdd) {
     }
 }
 
+function addGameHighlight(matchId, gameId, isPartyHomeString, highlight, highlightValue) {
+    let isPartyHome = (isPartyHomeString === 'true');
+    console.log("gameId: " + gameId + "; isPartyHome: " + isPartyHome + "; highlight: " + highlight + "; highlightValue: " + highlightValue);
+    $.ajax({
+        type: "POST",
+        url: "/api/match/" + matchId + "/game/" + gameId + "/addHighlight/" + (isPartyHome ? "Home" : "Guest") + "/" + highlight + (highlight === 'OneEighty' ? "" : "/" + highlightValue),
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (match) {
+            // update game with highlight
+        },
+        error: function (errMsg) {
+            console.log("addGameHighlight :: " + errMsg);
+        }
+    });
+}
+
 function deleteMatch(matchId) {
     console.log("Deleting Match. :: MatchId: " + matchId);
     $.ajax({

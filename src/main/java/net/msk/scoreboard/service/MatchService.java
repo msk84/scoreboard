@@ -1,6 +1,7 @@
 package net.msk.scoreboard.service;
 
 import net.msk.scoreboard.mapper.MatchMapper;
+import net.msk.scoreboard.model.GameHighlight;
 import net.msk.scoreboard.model.Match;
 import net.msk.scoreboard.model.Party;
 import net.msk.scoreboard.persistence.model.GameEntity;
@@ -77,6 +78,16 @@ public class MatchService {
         final MatchEntity matchEntity = this.matchRepository.findById(matchId)
                 .orElseThrow(() -> new MatchNotFoundException(matchId));
         matchEntity.decrementGameScore(gameId, party);
+
+        return MatchMapper.INSTANCE.matchEntityToMatch(matchEntity);
+    }
+
+    @Transactional
+    public Match addGameHighlight(final Long matchId, final Long gameId, final Party party, final GameHighlight gameHighlight) {
+        LOGGER.info("Adding game highlight. :: Match: {}, Game: {}, Party: {}, Highlight: {}", matchId, gameId, party, gameHighlight);
+        final MatchEntity matchEntity = this.matchRepository.findById(matchId)
+                .orElseThrow(() -> new MatchNotFoundException(matchId));
+        matchEntity.addGameHighlight(gameId, party, gameHighlight);
 
         return MatchMapper.INSTANCE.matchEntityToMatch(matchEntity);
     }

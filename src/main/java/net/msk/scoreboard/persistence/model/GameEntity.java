@@ -1,10 +1,13 @@
 package net.msk.scoreboard.persistence.model;
 
+import net.msk.scoreboard.model.GameHighlight;
 import net.msk.scoreboard.model.Status;
 import net.msk.scoreboard.model.Party;
 import net.msk.scoreboard.service.GlobalRevisionCounter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class GameEntity {
@@ -31,12 +34,20 @@ public class GameEntity {
     @Column
     private Integer scoreGuest;
 
+    @Convert(converter = GameHighlightListConverter.class)
+    private List<GameHighlight> gameHighlightsHome;
+
+    @Convert(converter = GameHighlightListConverter.class)
+    private List<GameHighlight> gameHighlightsGuest;
+
     @Column(nullable = false)
     private long revision;
 
     public GameEntity() {
         this.scoreHome = 0;
         this.scoreGuest = 0;
+        this.gameHighlightsHome = new ArrayList<>();
+        this.gameHighlightsGuest = new ArrayList<>();
     }
 
     public long getId() {
@@ -95,6 +106,22 @@ public class GameEntity {
         this.scoreGuest = scoreGuest;
     }
 
+    public List<GameHighlight> getGameHighlightsHome() {
+        return gameHighlightsHome;
+    }
+
+    public void setGameHighlightsHome(List<GameHighlight> gameHighlights) {
+        this.gameHighlightsHome = gameHighlights;
+    }
+
+    public List<GameHighlight> getGameHighlightsGuest() {
+        return gameHighlightsGuest;
+    }
+
+    public void setGameHighlightsGuest(List<GameHighlight> gameHighlightsGuest) {
+        this.gameHighlightsGuest = gameHighlightsGuest;
+    }
+
     public void incrementScore(final Party party) {
         if (this.status != Status.FINISHED) {
             if (Party.Home == party) {
@@ -123,8 +150,18 @@ public class GameEntity {
         this.updateGameStatus();
     }
 
+    public void addGameHighlight(final Party party, final GameHighlight gameHighlight) {
+        if(Party.Home == party) {
+            this.gameHighlightsHome.add(gameHighlight);
+        }
+        else {
+            this.gameHighlightsGuest.add(gameHighlight);
+        }
+        this.updateGameStatus();
+    }
+
     private void updateGameStatus() {
-        if (this.scoreHome < 1 && this.scoreGuest < 1) {
+        if (this.scoreHome < 1 && this.scoreGuest < 1 && this.gameHighlightsHome.isEmpty() && this.gameHighlightsGuest.isEmpty()) {
             this.status = Status.PLANNED;
         } else if (this.scoreHome > 2 || scoreGuest > 2) {
             this.status = Status.FINISHED;

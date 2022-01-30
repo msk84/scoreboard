@@ -59,6 +59,11 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>net.msk</groupId>
+			<artifactId>dartscoreValidationLib</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

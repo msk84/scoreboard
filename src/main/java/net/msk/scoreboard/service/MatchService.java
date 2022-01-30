@@ -1,6 +1,7 @@
 package net.msk.scoreboard.service;
 
 import net.msk.scoreboard.mapper.MatchMapper;
+import net.msk.scoreboard.model.Game;
 import net.msk.scoreboard.model.GameHighlight;
 import net.msk.scoreboard.model.Match;
 import net.msk.scoreboard.model.Party;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -89,8 +92,44 @@ public class MatchService {
                 .orElseThrow(() -> new MatchNotFoundException(matchId));
         matchEntity.addGameHighlight(gameId, party, gameHighlight);
 
-        return MatchMapper.INSTANCE.matchEntityToMatch(matchEntity);
+        final Match match = MatchMapper.INSTANCE.matchEntityToMatch(matchEntity);
+        return match;
     }
+
+    /*
+    private void fixGameHighlightSerialization(final Match match) {
+        for(final Game game : match.getGames()) {
+
+            final ArrayList<LinkedHashMap<String, String>> fixedGameHighlightHome = new ArrayList<>();
+            for(final Object gameHighlight : game.getGameHighlightsHome()) {
+                if(gameHighlight.getClass() == GameHighlight.class) {
+                    final LinkedHashMap<String, String> entry = new LinkedHashMap<>();
+                    entry.put("type", ((GameHighlight) gameHighlight).type().toString());
+                    entry.put("value", ((GameHighlight) gameHighlight).value().toString());
+                    fixedGameHighlightHome.add(entry);
+                }
+                else {
+                    fixedGameHighlightHome.add((LinkedHashMap<String, String>) gameHighlight);
+                }
+            }
+
+            final ArrayList<LinkedHashMap<String, String>> fixedGameHighlightGuest = new ArrayList<>();
+            for(final Object gameHighlight : game.getGameHighlightsGuest()) {
+                if(gameHighlight.getClass() == GameHighlight.class) {
+                    final LinkedHashMap<String, String> entry = new LinkedHashMap<>();
+                    entry.put("type", ((GameHighlight) gameHighlight).type().toString());
+                    entry.put("value", ((GameHighlight) gameHighlight).value().toString());
+                    fixedGameHighlightGuest.add(entry);
+                }
+                else {
+                    fixedGameHighlightGuest.add((LinkedHashMap<String, String>) gameHighlight);
+                }
+            }
+
+            game.setGameHighlightsHome(fixedGameHighlightHome);
+        }
+    }
+    */
 
     public Boolean matchHasUpdate(final Long matchId, final Long clientRevision) {
         final MatchEntity matchEntity = this.matchRepository.findById(matchId)

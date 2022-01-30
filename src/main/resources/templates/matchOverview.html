@@ -59,18 +59,18 @@
                             </div>
                             <div class="row row-cols-2">
                                 <div class="col text-end">
-                                <span th:each="highlightHome : ${game.gameHighlightsHome}">
-                                    <span th:if="${highlightHome.type == 'OneEighty'}"><i class="bi-badge-8k fs-3"></i></span>
-                                    <span th:if="${highlightHome.type == 'HighFinish'}"><i class="bi-bullseye fs-3">[[${highlightHome.value}]]</i></span>
-                                    <span th:if="${highlightHome.type == 'ShortGame'}"><i class="bi-arrows-angle-contract fs-3">[[${highlightHome.value}]]</i></span>
-                                </span>
+                                    <span th:each="highlightHome, higlightHomeIndex : ${game.gameHighlightsHome}">
+                                        <span th:if="${#strings.toString(highlightHome.type) == 'OneEighty'}"><i class="bi-badge-8k fs-3"></i></span>
+                                        <span th:if="${#strings.toString(highlightHome.type) == 'HighFinish'}"><i class="bi-bullseye fs-3">[[${highlightHome.value}]]</i></span>
+                                        <span th:if="${#strings.toString(highlightHome.type) == 'ShortGame'}"><i class="bi-arrows-angle-contract fs-3">[[${highlightHome.value}]]</i></span>
+                                    </span>
                                 </div>
                                 <div class="col">
-                                <span th:each="highlightGuest : ${game.gameHighlightsGuest}">
-                                    <span th:if="${highlightGuest.type == 'OneEighty'}"><i class="bi-badge-8k fs-3"></i></span>
-                                    <span th:if="${highlightGuest.type == 'HighFinish'}"><i class="bi-bullseye fs-3">[[${highlightGuest.value}]]</i></span>
-                                    <span th:if="${highlightGuest.type == 'ShortGame'}"><i class="bi-arrows-angle-contract fs-3">[[${highlightGuest.value}]]</i></span>
-                                </span>
+                                    <span th:each="highlightGuest, higlightGuestIndex : ${game.gameHighlightsGuest}">
+                                        <span th:if="${#strings.toString(highlightGuest.type) == 'OneEighty'}"><i class="bi-badge-8k fs-3"></i></span>
+                                        <span th:if="${#strings.toString(highlightGuest.type) == 'HighFinish'}"><i class="bi-bullseye fs-3">[[${highlightGuest.value}]]</i></span>
+                                        <span th:if="${#strings.toString(highlightGuest.type) == 'ShortGame'}"><i class="bi-arrows-angle-contract fs-3">[[${highlightGuest.value}]]</i></span>
+                                    </span>
                                 </div>
                             </div>
                         </div>

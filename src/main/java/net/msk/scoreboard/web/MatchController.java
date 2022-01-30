@@ -1,5 +1,6 @@
 package net.msk.scoreboard.web;
 
+import net.msk.dartscoreValidation.ScoreValidator;
 import net.msk.scoreboard.model.GameHighlight;
 import net.msk.scoreboard.model.Match;
 import net.msk.scoreboard.model.Party;
@@ -60,13 +61,25 @@ public class MatchController {
     @PostMapping(value = {"/{matchId}/game/{gameId}/addHighlight/{party}/{highlight}", "/{matchId}/game/{gameId}/addHighlight/{party}/{highlight}/{highlightValue}"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Match addGameHighlight(@PathVariable final Long matchId, @PathVariable final Long gameId, @PathVariable final Party party,
-                                    @PathVariable final String highlight, @PathVariable(required = false) final Integer highlightValue) {
-        final GameHighlight gameHighlight = new GameHighlight(GameHighlight.Type.valueOf(highlight), highlightValue);
-        return this.matchService.addGameHighlight(matchId, gameId, party, gameHighlight);
+                                                 @PathVariable final String highlight, @PathVariable(required = false) final Integer highlightValue) throws Exception {
+
+        final GameHighlight.Type gameHighlightType = GameHighlight.Type.valueOf(highlight);
+
+        if ((gameHighlightType == GameHighlight.Type.OneEighty) || (highlightValue != null &&
+                (gameHighlightType == GameHighlight.Type.HighFinish && ScoreValidator.isValidHighfinish(highlightValue)) ||
+                (gameHighlightType == GameHighlight.Type.ShortGame && ScoreValidator.isValidShortgame(highlightValue)))) {
+
+            final GameHighlight gameHighlight = new GameHighlight(gameHighlightType, highlightValue);
+            return this.matchService.addGameHighlight(matchId, gameId, party, gameHighlight);
+        }
+
+        LOGGER.error("Rejected invalid game highlight. :: HighlightType: {}; HighlightValue: {}", highlight, highlightValue);
+        throw new Exception("Rejected invalid game highlight.");
     }
 
     @GetMapping("/{matchId}/hasUpdate")
     public Boolean matchHasUpdate(@PathVariable final Long matchId, @RequestParam("clientRevision") Long clientRevision) {
         return this.matchService.matchHasUpdate(matchId, clientRevision);
     }
+
 }
